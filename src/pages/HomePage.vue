@@ -876,7 +876,7 @@ function getOptionLabel(options, value) {
   const match = options.find((option) => option.value === value)
   return match ? match.label : t('contact.form.notSelected')
 }
-
+//
 function selectExample(example) {
   const suggestedTypeByExample = {
     local_business: 'presentation',
