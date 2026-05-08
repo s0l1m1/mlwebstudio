@@ -468,6 +468,24 @@
               label="Šta želite da napravimo?"
               class="input input--textarea"
             />
+            <transition name="form-alert-fade">
+              <div
+                v-if="formStatus.message"
+                class="form-alert"
+                :class="`form-alert--${formStatus.type}`"
+              >
+                <q-icon
+                  :name="
+                    formStatus.type === 'positive'
+                      ? 'check_circle'
+                      : formStatus.type === 'warning'
+                        ? 'warning'
+                        : 'error'
+                  "
+                />
+                <span>{{ formStatus.message }}</span>
+              </div>
+            </transition>
 
             <q-btn
               type="submit"
@@ -500,16 +518,101 @@
         <p>Web dizajn, redizajn i prodajne stranice za male biznise.</p>
       </div>
     </footer>
+    <transition name="scroll-top-fade">
+      <button
+        v-if="showScrollTop"
+        type="button"
+        class="scroll-top"
+        aria-label="Vrati se na vrh stranice"
+        @click="scrollToSection('top')"
+      >
+        <q-icon name="keyboard_arrow_up" />
+      </button>
+    </transition>
   </q-page>
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
-import { useQuasar } from 'quasar'
+import { reactive, ref, onMounted, onBeforeUnmount } from 'vue'
+//import { useQuasar } from 'quasar'
 
-const $q = useQuasar()
+//const $q = useQuasar()
+
+// function showNotify({ type = 'positive', message }) {
+//   const config = {
+//     positive: {
+//       icon: 'check_circle',
+//       color: 'primary',
+//       textColor: 'white',
+//     },
+//     warning: {
+//       icon: 'warning',
+//       color: 'amber-8',
+//       textColor: 'white',
+//     },
+//     negative: {
+//       icon: 'error',
+//       color: 'negative',
+//       textColor: 'white',
+//     },
+//   }
+
+//   const selected = config[type] || config.positive
+
+//   $q.notify({
+//     message,
+//     icon: selected.icon,
+//     color: selected.color,
+//     textColor: selected.textColor,
+//     position: 'top-right',
+//     timeout: 4200,
+//     progress: true,
+//     actions: [
+//       {
+//         icon: 'close',
+//         color: 'white',
+//         round: true,
+//         handler: () => {},
+//       },
+//     ],
+//     classes: `premium-notify premium-notify--${type}`,
+//   })
+// }
 
 const isSubmitting = ref(false)
+const formStatus = ref({
+  type: '',
+  message: '',
+})
+
+function setFormStatus(type, message) {
+  formStatus.value = {
+    type,
+    message,
+  }
+}
+
+function clearFormStatus() {
+  formStatus.value = {
+    type: '',
+    message: '',
+  }
+}
+
+const showScrollTop = ref(false)
+
+function handleScroll() {
+  showScrollTop.value = window.scrollY > 650
+}
+
+onMounted(() => {
+  handleScroll()
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT
 
 const form = reactive({
@@ -605,6 +708,14 @@ const process = [
 ]
 
 function scrollToSection(id) {
+  if (id === 'top') {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+    return
+  }
+
   const element = document.getElementById(id)
   if (!element) return
 
@@ -618,19 +729,15 @@ function scrollToSection(id) {
 }
 
 async function submitForm() {
+  clearFormStatus()
+
   if (!form.name.trim() || !form.contact.trim() || !form.message.trim()) {
-    $q.notify({
-      type: 'warning',
-      message: 'Popunite ime, kontakt i kratku poruku.',
-    })
+    setFormStatus('warning', 'Popunite ime, kontakt i kratku poruku.')
     return
   }
 
   if (!formspreeEndpoint) {
-    $q.notify({
-      type: 'negative',
-      message: 'Kontakt forma nije povezana. Nedostaje Formspree endpoint.',
-    })
+    setFormStatus('negative', 'Kontakt forma trenutno nije povezana. Pošaljite email direktno.')
     return
   }
 
@@ -656,10 +763,7 @@ async function submitForm() {
       throw new Error('Slanje forme nije uspelo')
     }
 
-    $q.notify({
-      type: 'positive',
-      message: 'Upit je poslat. Javićemo vam se uskoro.',
-    })
+    setFormStatus('positive', 'Upit je poslat. Javljamo se uskoro sa konkretnim predlogom.')
 
     form.name = ''
     form.contact = ''
@@ -667,10 +771,10 @@ async function submitForm() {
     form.message = ''
   } catch (error) {
     console.log(error)
-    $q.notify({
-      type: 'negative',
-      message: 'Došlo je do greške pri slanju. Pokušajte ponovo ili pošaljite email direktno.',
-    })
+    setFormStatus(
+      'negative',
+      'Došlo je do greške pri slanju. Pokušajte ponovo ili pošaljite email direktno.',
+    )
   } finally {
     isSubmitting.value = false
   }
@@ -2327,5 +2431,238 @@ h1 {
   display: block;
   object-fit: cover;
   border-radius: inherit;
+}
+.premium-notify {
+  min-width: 320px;
+  max-width: 420px;
+  padding: 14px 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(circle at top left, rgba(147, 197, 253, 0.18), transparent 14rem),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.96)) !important;
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(22px);
+  overflow: hidden;
+}
+
+.premium-notify .q-notification__message {
+  font-weight: 850;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.premium-notify .q-notification__icon {
+  font-size: 24px;
+}
+
+.premium-notify--positive {
+  border-color: rgba(34, 197, 94, 0.24);
+}
+
+.premium-notify--positive .q-notification__icon {
+  color: #86efac;
+}
+
+.premium-notify--warning {
+  border-color: rgba(245, 158, 11, 0.28);
+}
+
+.premium-notify--warning .q-notification__icon {
+  color: #fcd34d;
+}
+
+.premium-notify--negative {
+  border-color: rgba(248, 113, 113, 0.3);
+}
+
+.premium-notify--negative .q-notification__icon {
+  color: #fca5a5;
+}
+
+.premium-notify .q-notification__progress {
+  background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6) !important;
+  opacity: 1;
+}
+.scroll-top {
+  position: fixed;
+  right: 26px;
+  bottom: 26px;
+  z-index: 60;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 22px;
+  color: white;
+  cursor: pointer;
+  background:
+    radial-gradient(circle at top left, rgba(147, 197, 253, 0.24), transparent 8rem),
+    linear-gradient(
+      135deg,
+      rgba(37, 99, 235, 0.92),
+      rgba(124, 58, 237, 0.92) 56%,
+      rgba(219, 39, 119, 0.9)
+    );
+  box-shadow:
+    0 22px 50px rgba(37, 99, 235, 0.26),
+    0 10px 28px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(18px);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow:
+      0 28px 64px rgba(37, 99, 235, 0.34),
+      0 12px 34px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.26);
+  }
+
+  &:active {
+    transform: translateY(-2px) scale(0.98);
+  }
+
+  .q-icon {
+    font-size: 31px;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.28));
+  }
+}
+
+.scroll-top-fade-enter-active,
+.scroll-top-fade-leave-active {
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+
+.scroll-top-fade-enter-from,
+.scroll-top-fade-leave-to {
+  opacity: 0;
+  transform: translateY(12px) scale(0.92);
+}
+
+@media (max-width: 760px) {
+  .scroll-top {
+    right: 18px;
+    bottom: 18px;
+    width: 52px;
+    height: 52px;
+    border-radius: 19px;
+
+    .q-icon {
+      font-size: 29px;
+    }
+  }
+}
+.form-alert {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin: 2px 0 14px;
+  padding: 14px 16px;
+  border-radius: 20px;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(18px);
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .q-icon {
+    position: relative;
+    z-index: 2;
+    margin-top: 1px;
+    font-size: 22px;
+    flex: 0 0 auto;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.22));
+  }
+
+  span {
+    position: relative;
+    z-index: 2;
+    display: block;
+  }
+}
+
+.form-alert--positive {
+  color: #dcfce7;
+  border-color: rgba(34, 197, 94, 0.3);
+  background:
+    radial-gradient(circle at top left, rgba(34, 197, 94, 0.22), transparent 12rem),
+    linear-gradient(135deg, rgba(22, 101, 52, 0.46), rgba(15, 23, 42, 0.78));
+
+  &:before {
+    background: linear-gradient(90deg, rgba(34, 197, 94, 0.22), transparent 38%);
+  }
+
+  .q-icon {
+    color: #86efac;
+  }
+}
+
+.form-alert--warning {
+  color: #fffbeb;
+  border-color: rgba(245, 158, 11, 0.34);
+  background:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.24), transparent 12rem),
+    linear-gradient(135deg, rgba(146, 64, 14, 0.46), rgba(15, 23, 42, 0.78));
+
+  &:before {
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.23), transparent 38%);
+  }
+
+  .q-icon {
+    color: #fcd34d;
+  }
+}
+
+.form-alert--negative {
+  color: #fee2e2;
+  border-color: rgba(248, 113, 113, 0.34);
+  background:
+    radial-gradient(circle at top left, rgba(248, 113, 113, 0.24), transparent 12rem),
+    linear-gradient(135deg, rgba(127, 29, 29, 0.48), rgba(15, 23, 42, 0.78));
+
+  &:before {
+    background: linear-gradient(90deg, rgba(248, 113, 113, 0.23), transparent 38%);
+  }
+
+  .q-icon {
+    color: #fca5a5;
+  }
+}
+
+.form-alert-fade-enter-active,
+.form-alert-fade-leave-active {
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+
+.form-alert-fade-enter-from,
+.form-alert-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
 }
 </style>
