@@ -47,8 +47,8 @@
             </h1>
 
             <p class="hero__lead">
-              Pomažemo malim i srednjim biznisima da dobiju brz, moderan i prodajno usmeren sajt
-              koji jasno predstavi uslugu, izgradi poverenje i pretvori posetioce u konkretne upite.
+              Radimo izradu modernih sajtova za male biznise, landing stranice i redizajn postojećih
+              sajtova, sa fokusom na brzinu, mobilni prikaz, jasnu ponudu i više konkretnih upita.
             </p>
 
             <div class="hero__actions">
@@ -230,8 +230,9 @@
               <span>Usluge</span>
               <h2>Šta možemo da napravimo za vaš biznis?</h2>
               <p>
-                Radimo stranice koje imaju jasnu namenu: da predstave uslugu, objasne prednosti,
-                izgledaju profesionalno i povećaju šansu da posetilac pošalje upit.
+                Radimo web dizajn, izradu sajtova, redizajn postojećih stranica i landing stranice
+                za oglase. Svaka stranica ima jasnu namenu: da predstavi uslugu, objasni prednosti i
+                poveća šansu da posetilac pošalje upit.
               </p>
 
               <q-btn
@@ -515,7 +516,7 @@
           <span>ML Web Studio</span>
         </button>
 
-        <p>Web dizajn, redizajn i prodajne stranice za male biznise.</p>
+        <p>Izrada sajtova, web dizajn, redizajn i landing stranice za male biznise.</p>
       </div>
     </footer>
     <transition name="scroll-top-fade">
