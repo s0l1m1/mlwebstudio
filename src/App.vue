@@ -3,18 +3,24 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { nextTick, onMounted } from 'vue'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick()
+
   AOS.init({
-    duration: 550,
+    duration: 450,
     once: true,
-    offset: 45,
+    offset: 50,
     delay: 0,
     easing: 'ease-out-cubic',
     mirror: false,
   })
+
+  window.setTimeout(() => {
+    AOS.refresh()
+  }, 150)
 })
 </script>

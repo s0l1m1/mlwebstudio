@@ -19,6 +19,7 @@
     "aos": "^2.3.4",
     "quasar": "^2.16.0",
     "vue": "^3.5.22",
+    "vue-i18n": "^11.4.2",
     "vue-router": "^5.0.3"
   },
   "devDependencies": {

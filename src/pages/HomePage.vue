@@ -8,28 +8,67 @@
     <header class="nav">
       <button class="brand" type="button" @click="scrollToSection('top')">
         <div class="brand__mark brand__mark--logo">
-          <img src="/brand/ml-logo.png" alt="ML Web Studio - izrada sajtova i web dizajn" />
+          <img src="/brand/ml-logo.png" :alt="t('aria.logoAlt')" width="50" height="50" />
         </div>
         <div class="brand__text">
           <strong>ML Web Studio</strong>
-          <span>Izrada sajtova i landing stranica</span>
+          <span>{{ t('nav.tagline') }}</span>
         </div>
       </button>
 
       <nav class="nav__links">
-        <button type="button" @click="scrollToSection('services')">Usluge</button>
-        <button type="button" @click="scrollToSection('approach')">Pristup</button>
-        <button type="button" @click="scrollToSection('process')">Proces</button>
-        <button type="button" @click="scrollToSection('contact')">Kontakt</button>
+        <button type="button" @click="scrollToSection('services')">{{ t('nav.services') }}</button>
+        <button type="button" @click="scrollToSection('approach')">{{ t('nav.approach') }}</button>
+        <button type="button" @click="scrollToSection('process')">{{ t('nav.process') }}</button>
+        <button type="button" @click="scrollToSection('contact')">{{ t('nav.contact') }}</button>
       </nav>
 
-      <q-btn
-        unelevated
-        rounded
-        class="nav__button"
-        label="Pošalji upit"
-        @click="scrollToSection('contact')"
-      />
+      <div class="nav__actions">
+        <q-btn-dropdown
+          unelevated
+          rounded
+          no-caps
+          dropdown-icon="expand_more"
+          class="lang-dropdown"
+          :aria-label="t('aria.languageSwitcher')"
+        >
+          <template #label>
+            <span class="lang-dropdown__label">
+              <strong>{{ currentLanguage.short }}</strong>
+              <span>{{ currentLanguage.label }}</span>
+            </span>
+          </template>
+          <q-list class="lang-menu">
+            <q-item
+              v-for="language in languages"
+              :key="language.code"
+              clickable
+              v-close-popup
+              class="lang-menu__item"
+              :class="{ 'lang-menu__item--active': locale === language.code }"
+              :aria-label="language.code === 'sr' ? t('aria.switchToSr') : t('aria.switchToEn')"
+              @click="setLanguage(language.code)"
+            >
+              <q-item-section avatar>
+                <span class="lang-menu__short">{{ language.short }}</span>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ language.label }}</q-item-label>
+              </q-item-section>
+              <q-item-section side v-if="locale === language.code">
+                <q-icon name="check" />
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+        <q-btn
+          unelevated
+          rounded
+          class="nav__button"
+          :label="t('nav.sendInquiry')"
+          @click="scrollToSection('contact')"
+        />
+      </div>
     </header>
 
     <main id="top">
@@ -38,18 +77,16 @@
           <div class="hero__content" data-aos="fade-right">
             <div class="hero__badge">
               <q-icon name="auto_awesome" />
-              Izrada sajtova za male biznise, landing stranice i redizajn
+              {{ t('hero.badge') }}
             </div>
 
             <h1>
-              Pravimo moderne sajtove,
-              <span>landing stranice i redizajn koji donose upite.</span>
+              {{ t('hero.titleTop') }}
+              <span>{{ t('hero.titleBottom') }}</span>
             </h1>
 
             <p class="hero__lead">
-              Radimo izradu sajtova za male biznise, redizajn postojećih sajtova i landing stranice
-              za oglase. Fokus je na brzom učitavanju, dobrom mobilnom prikazu, jasnoj ponudi i
-              većem broju konkretnih upita.
+              {{ t('hero.lead') }}
             </p>
 
             <div class="hero__actions">
@@ -58,7 +95,7 @@
                 rounded
                 size="lg"
                 class="btn-primary"
-                label="Zatraži ponudu"
+                :label="t('hero.requestOffer')"
                 @click="scrollToSection('contact')"
               />
 
@@ -67,23 +104,16 @@
                 rounded
                 size="lg"
                 class="btn-ghost"
-                label="Pogledaj usluge"
+                :label="t('hero.viewServices')"
                 @click="scrollToSection('services')"
               />
             </div>
+            <p class="hero__microcopy">{{ t('hero.microcopy') }}</p>
 
             <div class="hero__chips">
-              <div>
-                <q-icon name="phone_iphone" />
-                Mobilno optimizovano
-              </div>
-              <div>
-                <q-icon name="speed" />
-                Brzo učitavanje
-              </div>
-              <div>
-                <q-icon name="ads_click" />
-                Jasan poziv na akciju
+              <div v-for="(chip, index) in heroChips" :key="chip">
+                <q-icon :name="heroChipIcons[index] || 'check_circle'" />
+                <span>{{ chip }}</span>
               </div>
             </div>
           </div>
@@ -94,8 +124,8 @@
 
               <div class="showcase-card__top">
                 <div>
-                  <span>Studio proces</span>
-                  <strong>Od ideje do sajta koji prodaje priču</strong>
+                  <span>{{ t('showcase.process') }}</span>
+                  <strong>{{ t('showcase.title') }}</strong>
                 </div>
 
                 <div class="showcase-card__icon">
@@ -106,11 +136,11 @@
               <div class="showcase-card__status">
                 <div>
                   <q-icon name="verified" />
-                  <span>Ponuda po dogovoru</span>
+                  <span>{{ t('showcase.statusOffer') }}</span>
                 </div>
                 <div>
                   <q-icon name="auto_graph" />
-                  <span>Prodajni fokus</span>
+                  <span>{{ t('showcase.statusSales') }}</span>
                 </div>
               </div>
 
@@ -120,8 +150,8 @@
                     <q-icon name="psychology" />
                   </div>
                   <div>
-                    <strong>Strategija</strong>
-                    <span>Definišemo cilj, poruku i korisnički tok.</span>
+                    <strong>{{ t('showcase.strategy') }}</strong>
+                    <span>{{ t('showcase.strategyText') }}</span>
                   </div>
                 </div>
 
@@ -130,8 +160,8 @@
                     <q-icon name="palette" />
                   </div>
                   <div>
-                    <strong>Vizuelni identitet</strong>
-                    <span>Pravimo moderan izgled koji gradi poverenje.</span>
+                    <strong>{{ t('showcase.visual') }}</strong>
+                    <span>{{ t('showcase.visualText') }}</span>
                   </div>
                 </div>
 
@@ -140,8 +170,8 @@
                     <q-icon name="code" />
                   </div>
                   <div>
-                    <strong>Implementacija</strong>
-                    <span>Pretvaramo dizajn u brz i responzivan sajt.</span>
+                    <strong>{{ t('showcase.implementation') }}</strong>
+                    <span>{{ t('showcase.implementationText') }}</span>
                   </div>
                 </div>
               </div>
@@ -149,26 +179,24 @@
               <div class="showcase-grid">
                 <div class="showcase-grid__main">
                   <div class="gradient-line"></div>
-                  <strong>Prodajna struktura</strong>
-                  <p>
-                    Stranicu gradimo kao jasnu priču: problem, rešenje, poverenje, usluge i kontakt.
-                  </p>
+                  <strong>{{ t('showcase.structure') }}</strong>
+                  <p>{{ t('showcase.structureText') }}</p>
                 </div>
 
                 <div class="showcase-grid__box">
                   <q-icon name="bolt" />
-                  <span>Brzina</span>
+                  <span>{{ t('showcase.speed') }}</span>
                 </div>
 
                 <div class="showcase-grid__box showcase-grid__box--pink">
                   <q-icon name="workspace_premium" />
-                  <span>Utisak</span>
+                  <span>{{ t('showcase.impression') }}</span>
                 </div>
               </div>
 
               <div class="showcase-card__bottom">
                 <span class="live-dot"></span>
-                <p>Jasna struktura, moderan dizajn i put od posete do upita.</p>
+                <p>{{ t('showcase.footer') }}</p>
               </div>
             </div>
           </div>
@@ -179,18 +207,15 @@
         <div class="wide-container">
           <div class="strip-card" data-aos="fade-up">
             <div>
-              <span>Web dizajn nije samo lep izgled.</span>
-              <strong>
-                Pravimo sajtove koji jasno objašnjavaju ponudu, grade poverenje i vode korisnika ka
-                kontaktu.
-              </strong>
+              <span>{{ t('intro.label') }}</span>
+              <strong>{{ t('intro.title') }}</strong>
             </div>
 
             <q-btn
               rounded
               unelevated
               class="strip-button"
-              label="Kako radimo?"
+              :label="t('intro.button')"
               @click="scrollToSection('approach')"
             />
           </div>
@@ -200,23 +225,13 @@
       <section class="section problem-section">
         <div class="container">
           <div class="section-heading section-heading--center" data-aos="fade-up">
-            <span>Zašto je bitno</span>
-            <h2>
-              Dobar sajt često odlučuje da li korisnik šalje upit ili odlazi kod konkurencije.
-            </h2>
-            <p>
-              Kada neko prvi put vidi vaš biznis online, dizajn, jasnoća i brzina direktno utiču na
-              poverenje. Zato svaku stranicu gradimo oko toga šta korisnik treba da razume i uradi.
-            </p>
+            <span>{{ t('problem.label') }}</span>
+            <h2>{{ t('problem.title') }}</h2>
+            <p>{{ t('problem.text') }}</p>
           </div>
 
           <div class="problem-grid">
-            <article
-              v-for="item in problems"
-              :key="item.title"
-              class="problem-card"
-              data-aos="fade-up"
-            >
+            <article v-for="item in problems" :key="item.title" class="problem-card">
               <div class="problem-card__icon">
                 <q-icon :name="item.icon" />
               </div>
@@ -231,31 +246,22 @@
         <div class="wide-container services-shell">
           <div class="container services-layout">
             <div class="section-heading section-heading--left sticky-heading" data-aos="fade-right">
-              <span>Usluge</span>
-              <h2>Web dizajn, izrada sajtova i redizajn za vaš biznis.</h2>
-              <p>
-                Radimo web dizajn, izradu sajtova za firme, redizajn postojećih sajtova i landing
-                stranice za oglase. Svaki projekat ima jasnu namenu: da predstavi uslugu, objasni
-                prednosti i poveća šansu da posetilac pošalje upit.
-              </p>
+              <span>{{ t('services.label') }}</span>
+              <h2>{{ t('services.title') }}</h2>
+              <p>{{ t('services.text') }}</p>
 
               <q-btn
                 unelevated
                 rounded
                 size="lg"
                 class="btn-primary"
-                label="Razgovarajmo o sajtu"
+                :label="t('services.cta')"
                 @click="scrollToSection('contact')"
               />
             </div>
 
             <div class="service-stack">
-              <article
-                v-for="service in services"
-                :key="service.title"
-                class="service-row"
-                data-aos="fade-left"
-              >
+              <article v-for="service in services" :key="service.title" class="service-row">
                 <div class="service-row__number">{{ service.number }}</div>
                 <div class="service-row__content">
                   <div class="service-row__top">
@@ -269,34 +275,189 @@
           </div>
         </div>
       </section>
+      <section class="section conversion-section">
+        <div class="container">
+          <div class="conversion-card" data-aos="fade-up">
+            <div>
+              <h3>{{ t('conversion.title') }}</h3>
+              <p>{{ t('conversion.text') }}</p>
+            </div>
+            <q-btn
+              unelevated
+              rounded
+              size="lg"
+              class="btn-primary conversion-card__button"
+              :label="t('conversion.button')"
+              @click="scrollToSection('contact')"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="section examples-section">
+        <div class="container">
+          <div class="section-heading section-heading--center" data-aos="fade-up">
+            <span>{{ t('examples.label') }}</span>
+            <h2>{{ t('examples.title') }}</h2>
+            <p>{{ t('examples.text') }}</p>
+          </div>
+
+          <div class="examples-grid">
+            <article
+              v-for="(example, index) in examples"
+              :key="example.title"
+              class="example-card"
+              :class="`example-card--${exampleTones[index]}`"
+            >
+              <div class="example-preview" :class="`example-preview--${exampleTones[index]}`">
+                <div class="example-preview__bar">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
+                <div class="example-preview__nav">
+                  <span v-for="navItem in example.preview.nav" :key="navItem">{{ navItem }}</span>
+                </div>
+
+                <template v-if="example.code !== 'website_redesign'">
+                  <div class="example-preview__hero">
+                    <p>{{ example.preview.heroTitle }}</p>
+                    <span>{{ example.preview.cta }}</span>
+                  </div>
+
+                  <div
+                    class="example-preview__cards"
+                    :class="{
+                      'example-preview__cards--landing': example.code === 'campaign_landing',
+                    }"
+                  >
+                    <div
+                      v-for="card in example.preview.cards"
+                      :key="card"
+                      class="example-preview__card"
+                    >
+                      <strong>{{ card }}</strong>
+                    </div>
+                  </div>
+
+                  <div v-if="example.code === 'campaign_landing'" class="example-preview__pills">
+                    <span v-for="pill in example.preview.pills" :key="pill">{{ pill }}</span>
+                  </div>
+
+                  <div
+                    class="example-preview__footer"
+                    :class="{
+                      'example-preview__footer--corporate':
+                        example.code === 'business_presentation',
+                    }"
+                  >
+                    <div v-if="example.code === 'local_business'" class="example-preview__support">
+                      {{ example.preview.support }}
+                    </div>
+                    <div v-else class="example-preview__cta-pill"></div>
+                    <div
+                      v-if="example.code === 'business_presentation'"
+                      class="example-preview__phone"
+                    ></div>
+                  </div>
+
+                  <div
+                    v-if="example.code === 'campaign_landing'"
+                    class="example-preview__mini-form"
+                  >
+                    <span></span>
+                    <div></div>
+                  </div>
+                </template>
+
+                <template v-else>
+                  <div class="example-preview__before-after">
+                    <div class="example-preview__state">
+                      <strong>{{ example.preview.before }}</strong>
+                      <div class="example-preview__state-lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+                    </div>
+                    <div class="example-preview__state example-preview__state--after">
+                      <strong>{{ example.preview.after }}</strong>
+                      <p>{{ example.preview.heroTitle }}</p>
+                      <div class="example-preview__state-lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+                      <i>{{ example.preview.cta }}</i>
+                    </div>
+                  </div>
+                </template>
+              </div>
+
+              <div class="example-card__copy">
+                <h3>{{ example.title }}</h3>
+                <p class="example-card__subtitle">{{ example.subtitle }}</p>
+                <p class="example-card__value">{{ example.description }}</p>
+                <ul>
+                  <li v-for="bullet in example.bullets" :key="bullet">
+                    <q-icon name="done" />
+                    <span>{{ bullet }}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="example-card__footer">
+                <q-btn
+                  unelevated
+                  rounded
+                  class="btn-primary example-card__button"
+                  :label="t('examples.cta')"
+                  @click="selectExample(example)"
+                />
+              </div>
+            </article>
+          </div>
+
+          <div class="examples-footer">
+            <h3>{{ t('examples.finalCta.title') }}</h3>
+            <p>{{ t('examples.note') }}</p>
+            <p>{{ t('examples.finalCta.text') }}</p>
+            <q-btn
+              unelevated
+              rounded
+              class="btn-primary"
+              :label="t('examples.finalCta.button')"
+              @click="scrollToSection('contact')"
+            />
+          </div>
+        </div>
+      </section>
 
       <section id="approach" class="section approach-section">
         <div class="wide-container">
           <div class="approach-card" data-aos="zoom-in-up">
             <div class="approach-card__content">
-              <span class="mini-label">Naš pristup</span>
-              <h2>Pre dizajna rešavamo najvažnije pitanje: zašto bi neko izabrao baš vas?</h2>
-              <p>
-                Dobar sajt nije samo kombinacija boja, animacija i sekcija. Prvo definišemo poruku,
-                publiku, redosled informacija i akciju koju korisnik treba da napravi.
-              </p>
+              <span class="mini-label">{{ t('approach.label') }}</span>
+              <h2>{{ t('approach.title') }}</h2>
+              <p>{{ t('approach.text') }}</p>
 
               <div class="approach-points">
                 <div>
                   <q-icon name="ads_click" />
-                  <span>Jasan poziv na akciju</span>
+                  <span>{{ approachPoints[0] }}</span>
                 </div>
                 <div>
                   <q-icon name="schema" />
-                  <span>Struktura koja vodi kroz ponudu</span>
+                  <span>{{ approachPoints[1] }}</span>
                 </div>
                 <div>
                   <q-icon name="speed" />
-                  <span>Brzina i responzivnost</span>
+                  <span>{{ approachPoints[2] }}</span>
                 </div>
                 <div>
                   <q-icon name="workspace_premium" />
-                  <span>Premium prvi utisak</span>
+                  <span>{{ approachPoints[3] }}</span>
                 </div>
               </div>
             </div>
@@ -306,22 +467,22 @@
                 <div class="orbit__ring"></div>
                 <div class="orbit__center">
                   <q-icon name="hub" />
-                  <span>Sajt</span>
+                  <span>{{ t('approach.orbit.site') }}</span>
                 </div>
 
                 <div class="orbit__item orbit__item--one">
                   <q-icon name="psychology" />
-                  <span>Poruka</span>
+                  <span>{{ t('approach.orbit.message') }}</span>
                 </div>
 
                 <div class="orbit__item orbit__item--two">
                   <q-icon name="palette" />
-                  <span>Dizajn</span>
+                  <span>{{ t('approach.orbit.design') }}</span>
                 </div>
 
                 <div class="orbit__item orbit__item--three">
                   <q-icon name="call" />
-                  <span>Upit</span>
+                  <span>{{ t('approach.orbit.inquiry') }}</span>
                 </div>
               </div>
             </div>
@@ -332,21 +493,13 @@
       <section class="section audience-section">
         <div class="container">
           <div class="section-heading section-heading--center" data-aos="fade-up">
-            <span>Za koga radimo</span>
-            <h2>Najviše smisla ima za biznise kojima svaki poziv, rezervacija ili upit vredi.</h2>
-            <p>
-              Najčešće radimo sajtove za lokalne usluge, restorane, salone, ordinacije, apartmane,
-              majstore i firme kojima je potreban moderan online nastup.
-            </p>
+            <span>{{ t('audience.label') }}</span>
+            <h2>{{ t('audience.title') }}</h2>
+            <p>{{ t('audience.text') }}</p>
           </div>
 
           <div class="audience-grid">
-            <div
-              v-for="audience in audiences"
-              :key="audience"
-              class="audience-pill"
-              data-aos="fade-up"
-            >
+            <div v-for="audience in audiences" :key="audience" class="audience-pill">
               <q-icon name="check_circle" />
               <span>{{ audience }}</span>
             </div>
@@ -357,21 +510,13 @@
       <section id="process" class="section process-section">
         <div class="container">
           <div class="section-heading section-heading--center" data-aos="fade-up">
-            <span>Proces</span>
-            <h2>Od prve poruke do objavljenog sajta bez nepotrebnog komplikovanja.</h2>
-            <p>
-              Proces držimo jednostavnim: dogovorimo cilj, napravimo strukturu, dizajniramo,
-              implementiramo, objavimo i po potrebi dalje unapređujemo.
-            </p>
+            <span>{{ t('process.label') }}</span>
+            <h2>{{ t('process.title') }}</h2>
+            <p>{{ t('process.text') }}</p>
           </div>
 
           <div class="process-grid">
-            <article
-              v-for="step in process"
-              :key="step.title"
-              class="process-card"
-              data-aos="fade-up"
-            >
+            <article v-for="step in processSteps" :key="step.title" class="process-card">
               <div class="process-card__index">{{ step.index }}</div>
               <h3>{{ step.title }}</h3>
               <p>{{ step.text }}</p>
@@ -384,35 +529,15 @@
         <div class="wide-container">
           <div class="offer-card" data-aos="fade-up">
             <div class="offer-card__content">
-              <span class="mini-label mini-label--dark">Ponuda po dogovoru</span>
-              <h2>Ponudu formiramo prema cilju, obimu i realnim potrebama projekta.</h2>
-              <p>
-                Svaki sajt procenjujemo posebno, jer nije isto napraviti landing stranicu, redizajn
-                postojećeg sajta, prezentaciju sa više stranica ili dodatne funkcionalnosti poput
-                formi, mapa, analitike i integracija.
-              </p>
+              <span class="mini-label mini-label--dark">{{ t('offer.label') }}</span>
+              <h2>{{ t('offer.title') }}</h2>
+              <p>{{ t('offer.text') }}</p>
             </div>
 
             <div class="offer-list">
-              <div>
+              <div v-for="item in offerItems" :key="item">
                 <q-icon name="done" />
-                Landing stranice za oglase i kampanje
-              </div>
-              <div>
-                <q-icon name="done" />
-                Redizajn postojećeg sajta
-              </div>
-              <div>
-                <q-icon name="done" />
-                Prezentacioni sajtovi za firme
-              </div>
-              <div>
-                <q-icon name="done" />
-                Kontakt forme, mape i integracije
-              </div>
-              <div>
-                <q-icon name="done" />
-                Pomoć oko domena, hostinga i objave
+                {{ item }}
               </div>
             </div>
           </div>
@@ -422,12 +547,15 @@
       <section id="contact" class="section contact-section">
         <div class="container contact-layout">
           <div class="contact-copy" data-aos="fade-right">
-            <span class="mini-label">Kontakt</span>
-            <h2>Pošaljite upit za izradu sajta, landing stranice ili redizajn.</h2>
-            <p>
-              Pošaljite kratak opis biznisa, link postojećeg sajta ako ga imate i šta želite da
-              unapredimo. Na osnovu toga predlažemo pravac, obim i sledeće korake.
-            </p>
+            <span class="mini-label">{{ t('contact.label') }}</span>
+            <h2>{{ t('contact.title') }}</h2>
+            <p>{{ t('contact.text') }}</p>
+            <div class="contact-trust">
+              <div v-for="trust in contactTrust" :key="trust">
+                <q-icon name="task_alt" />
+                <span>{{ trust }}</span>
+              </div>
+            </div>
 
             <div class="contact-direct">
               <a href="mailto:miloslazarevic410@gmail.com">
@@ -443,12 +571,22 @@
             </div>
           </div>
 
-          <q-form class="contact-form" data-aos="fade-left" @submit.prevent="submitForm">
+          <q-form class="contact-form" @submit.prevent="submitForm">
+            <div class="form-intro">
+              <span>{{ t('contact.brief.label') }}</span>
+              <h3>{{ t('contact.brief.title') }}</h3>
+              <p>{{ t('contact.brief.text') }}</p>
+            </div>
+
+            <div class="form-trust">
+              <div v-for="trust in contactTrust" :key="trust">{{ trust }}</div>
+            </div>
+
             <q-input
               v-model="form.name"
               :disable="isSubmitting"
               borderless
-              label="Ime i firma"
+              :label="t('contact.form.name')"
               class="input"
             />
 
@@ -456,15 +594,63 @@
               v-model="form.contact"
               :disable="isSubmitting"
               borderless
-              label="Email ili telefon"
+              :label="t('contact.form.contact')"
               class="input"
             />
+
+            <div class="form-grid-two">
+              <q-select
+                v-model="form.projectType"
+                :options="projectTypeOptions"
+                emit-value
+                map-options
+                borderless
+                :disable="isSubmitting"
+                :label="t('contact.form.projectType')"
+                class="input"
+              />
+
+              <q-select
+                v-model="form.goal"
+                :options="goalOptions"
+                emit-value
+                map-options
+                borderless
+                :disable="isSubmitting"
+                :label="t('contact.form.goal')"
+                class="input"
+              />
+            </div>
+
+            <div class="form-grid-two">
+              <q-select
+                v-model="form.timeline"
+                :options="timelineOptions"
+                emit-value
+                map-options
+                borderless
+                :disable="isSubmitting"
+                :label="t('contact.form.timeline')"
+                class="input"
+              />
+
+              <q-select
+                v-model="form.budget"
+                :options="budgetOptions"
+                emit-value
+                map-options
+                borderless
+                :disable="isSubmitting"
+                :label="t('contact.form.budget')"
+                class="input"
+              />
+            </div>
 
             <q-input
               v-model="form.website"
               borderless
               :disable="isSubmitting"
-              label="Link sajta, ako postoji"
+              :label="t('contact.form.website')"
               class="input"
             />
 
@@ -474,7 +660,8 @@
               :disable="isSubmitting"
               type="textarea"
               autogrow
-              label="Šta želite da napravimo?"
+              :label="t('contact.form.message')"
+              :placeholder="t('contact.form.messagePlaceholder')"
               class="input input--textarea"
             />
             <transition name="form-alert-fade">
@@ -504,11 +691,11 @@
               class="btn-primary full-width"
               :loading="isSubmitting"
               :disable="isSubmitting"
-              label="Pošalji upit"
+              :label="t('contact.form.submit')"
             />
 
             <p class="form-note">
-              Odgovaramo sa konkretnim predlogom pravca, obima i sledećih koraka.
+              {{ t('contact.form.note') }}
             </p>
           </q-form>
         </div>
@@ -519,20 +706,31 @@
       <div class="container footer__inner">
         <button class="footer-brand" type="button" @click="scrollToSection('top')">
           <div class="brand__mark brand__mark--logo">
-            <img src="/brand/ml-logo.png" alt="ML Web Studio - izrada sajtova i web dizajn" />
+            <img src="/brand/ml-logo.png" :alt="t('aria.logoAlt')" width="50" height="50" />
           </div>
           <span>ML Web Studio</span>
         </button>
 
-        <p>Izrada sajtova, web dizajn, redizajn i landing stranice za male biznise.</p>
+        <p>{{ t('footer.text') }}</p>
       </div>
     </footer>
+    <transition name="scroll-top-fade">
+      <q-btn
+        v-if="showFloatingCta"
+        unelevated
+        rounded
+        class="floating-cta"
+        :label="t('contact.floatingCta')"
+        :aria-label="t('aria.openContact')"
+        @click="scrollToSection('contact')"
+      />
+    </transition>
     <transition name="scroll-top-fade">
       <button
         v-if="showScrollTop"
         type="button"
         class="scroll-top"
-        aria-label="Vrati se na vrh stranice"
+        :aria-label="t('aria.scrollTop')"
         @click="scrollToSection('top')"
       >
         <q-icon name="keyboard_arrow_up" />
@@ -542,7 +740,11 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, onBeforeUnmount } from 'vue'
+import { computed, reactive, ref, onMounted, onBeforeUnmount, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { STORAGE_KEY } from 'src/boot/i18n'
+
+const { t, tm, locale } = useI18n()
 
 const isSubmitting = ref(false)
 const formStatus = ref({
@@ -565,112 +767,89 @@ function clearFormStatus() {
 }
 
 const showScrollTop = ref(false)
+const showFloatingCta = ref(false)
+const isMobile = ref(false)
+
+const heroChips = computed(() => tm('hero.chips'))
+const heroChipIcons = ['phone_iphone', 'speed', 'ads_click']
+const languages = [
+  { code: 'sr', label: 'Srpski', short: 'SR' },
+  { code: 'en', label: 'English', short: 'EN' },
+]
+const currentLanguage = computed(() => {
+  return languages.find((language) => language.code === locale.value) ?? languages[0]
+})
+const problems = computed(() => tm('problem.items'))
+const services = computed(() => tm('services.items'))
+const approachPoints = computed(() => tm('approach.points'))
+const audiences = computed(() => tm('audience.items'))
+const processSteps = computed(() => tm('process.items'))
+const offerItems = computed(() => tm('offer.items'))
+const contactTrust = computed(() => tm('contact.trust'))
+const examples = computed(() => tm('examples.items'))
+const projectTypeOptions = computed(() => tm('contact.projectTypes'))
+const goalOptions = computed(() => tm('contact.goals'))
+const timelineOptions = computed(() => tm('contact.timelines'))
+const budgetOptions = computed(() => tm('contact.budgets'))
+const exampleTones = ['blue', 'pink', 'cyan', 'neutral']
 
 function handleScroll() {
   showScrollTop.value = window.scrollY > 650
+  showFloatingCta.value = isMobile.value && window.scrollY > 520
 }
 
 onMounted(() => {
+  isMobile.value = window.matchMedia('(max-width: 760px)').matches
   handleScroll()
+  updateSeoTags()
   window.addEventListener('scroll', handleScroll, { passive: true })
+  window.addEventListener('resize', handleResize, { passive: true })
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('resize', handleResize)
 })
 const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT
 
 const form = reactive({
   name: '',
   contact: '',
+  projectType: '',
+  goal: '',
+  timeline: '',
+  budget: '',
   website: '',
   message: '',
 })
 
-const problems = [
-  {
-    icon: 'visibility_off',
-    title: 'Slab prvi utisak',
-    text: 'Ako sajt izgleda zastarelo ili nepregledno, korisnik često izgubi poverenje pre nego što pročita ponudu.',
-  },
-  {
-    icon: 'phone_android',
-    title: 'Loše iskustvo na telefonu',
-    text: 'Većina posetilaca dolazi preko mobilnog uređaja. Zato stranica mora da bude brza, jasna i laka za korišćenje.',
-  },
-  {
-    icon: 'call_missed_outgoing',
-    title: 'Nejasan put do kontakta',
-    text: 'Ako korisnik ne zna gde da klikne, šta dobija i kako da vas kontaktira, velika je šansa da ode dalje.',
-  },
-]
+function handleResize() {
+  isMobile.value = window.matchMedia('(max-width: 760px)').matches
+  handleScroll()
+}
 
-const services = [
-  {
-    number: '01',
-    icon: 'web',
-    title: 'Landing stranice za oglase',
-    text: 'Pravimo landing stranice za oglase i kampanje, fokusirane na jednu jasnu ponudu, jak prvi utisak i konkretan poziv na akciju.',
-  },
-  {
-    number: '02',
-    icon: 'auto_fix_high',
-    title: 'Redizajn postojećih sajtova',
-    text: 'Ako sajt već postoji, ali izgleda zastarelo, nepregledno ili ne radi dobro na telefonu, pravimo moderniju i prodajno jasniju verziju.',
-  },
-  {
-    number: '03',
-    icon: 'business_center',
-    title: 'Izrada sajtova za firme',
-    text: 'Izrađujemo moderne prezentacione sajtove za firme, lokalne usluge i male biznise, sa jasnom strukturom, kontaktom i informacijama koje kupac treba da vidi.',
-  },
-  {
-    number: '04',
-    icon: 'phone_iphone',
-    title: 'Mobilna optimizacija i UX dizajn',
-    text: 'Sređujemo raspored, čitljivost, CTA dugmad, sekcije i korisnički tok kako bi stranica bila lakša za korišćenje.',
-  },
-  {
-    number: '05',
-    icon: 'integration_instructions',
-    title: 'Kontakt forme i integracije',
-    text: 'Povezujemo kontakt forme, email slanje, mape, WhatsApp/Viber dugmad, osnovnu analitiku i druge elemente koji pomažu da posetilac lakše pošalje upit.',
-  },
-]
+function setLanguage(nextLocale) {
+  if (nextLocale !== 'sr' && nextLocale !== 'en') return
+  locale.value = nextLocale
+}
 
-const audiences = [
-  'Restorani i kafići',
-  'Saloni lepote',
-  'Klima servisi',
-  'Majstori i lokalne usluge',
-  'Stomatološke i druge ordinacije',
-  'Apartmani i smeštaji',
-  'Fitnes treneri',
-  'Male firme i preduzetnici',
-]
+function updateSeoTags() {
+  document.title = t('seo.title')
+  const description = document.querySelector('meta[name="description"]')
+  if (description) {
+    description.setAttribute('content', t('seo.description'))
+  }
+}
 
-const process = [
-  {
-    index: '01',
-    title: 'Kratak dogovor',
-    text: 'Prvo definišemo šta sajt treba da postigne, kome se obraća i koju akciju korisnik treba da napravi.',
+watch(
+  locale,
+  (newLocale) => {
+    window.localStorage.setItem(STORAGE_KEY, newLocale)
+    document.documentElement.lang = newLocale
+    updateSeoTags()
   },
-  {
-    index: '02',
-    title: 'Struktura i sadržaj',
-    text: 'Pravimo redosled sekcija, poruke, CTA dugmad i osnovnu prodajnu logiku stranice.',
-  },
-  {
-    index: '03',
-    title: 'Dizajn i izrada',
-    text: 'Dizajn pretvaramo u brzu, modernu i responzivnu web stranicu spremnu za objavu.',
-  },
-  {
-    index: '04',
-    title: 'Objava i dorade',
-    text: 'Povezujemo domen, hosting, kontakt formu i radimo finalne dorade pre puštanja sajta.',
-  },
-]
+  { immediate: true },
+)
 
 function scrollToSection(id) {
   if (id === 'top') {
@@ -693,16 +872,37 @@ function scrollToSection(id) {
   })
 }
 
+function getOptionLabel(options, value) {
+  const match = options.find((option) => option.value === value)
+  return match ? match.label : t('contact.form.notSelected')
+}
+
+function selectExample(example) {
+  const suggestedTypeByExample = {
+    local_business: 'presentation',
+    campaign_landing: 'landing',
+    business_presentation: 'presentation',
+    website_redesign: 'redesign',
+  }
+
+  form.projectType = suggestedTypeByExample[example.code] || form.projectType
+  form.message =
+    locale.value === 'sr'
+      ? `Zanima me pravac: ${example.title}. Želim da mi predložite najbolju strukturu.`
+      : `I'm interested in this direction: ${example.title}. I'd like you to suggest the best structure.`
+  scrollToSection('contact')
+}
+
 async function submitForm() {
   clearFormStatus()
 
   if (!form.name.trim() || !form.contact.trim() || !form.message.trim()) {
-    setFormStatus('warning', 'Popunite ime, kontakt i kratku poruku.')
+    setFormStatus('warning', t('contact.form.validation'))
     return
   }
 
   if (!formspreeEndpoint) {
-    setFormStatus('negative', 'Kontakt forma trenutno nije povezana. Pošaljite email direktno.')
+    setFormStatus('negative', t('contact.form.endpointMissing'))
     return
   }
 
@@ -716,30 +916,40 @@ async function submitForm() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        project_type: getOptionLabel(projectTypeOptions.value, form.projectType),
+        tip_projekta: getOptionLabel(projectTypeOptions.value, form.projectType),
+        website_goal: getOptionLabel(goalOptions.value, form.goal),
+        cilj_sajta: getOptionLabel(goalOptions.value, form.goal),
+        timeline: getOptionLabel(timelineOptions.value, form.timeline),
+        rok: getOptionLabel(timelineOptions.value, form.timeline),
+        budget_range: getOptionLabel(budgetOptions.value, form.budget),
+        budzet: getOptionLabel(budgetOptions.value, form.budget),
+        language: locale.value,
+        jezik: locale.value,
         ime_i_firma: form.name,
         kontakt: form.contact,
-        sajt: form.website || 'Nije uneto',
+        sajt: form.website || t('contact.form.notSelected'),
         poruka: form.message,
         izvor: 'ML Web Studio landing stranica',
       }),
     })
 
     if (!response.ok) {
-      throw new Error('Slanje forme nije uspelo')
+      throw new Error('Form submission failed')
     }
 
-    setFormStatus('positive', 'Upit je poslat. Javljamo se uskoro sa konkretnim predlogom.')
+    setFormStatus('positive', t('contact.form.success'))
 
     form.name = ''
     form.contact = ''
+    form.projectType = ''
+    form.goal = ''
+    form.timeline = ''
+    form.budget = ''
     form.website = ''
     form.message = ''
-  } catch (error) {
-    console.log(error)
-    setFormStatus(
-      'negative',
-      'Došlo je do greške pri slanju. Pokušajte ponovo ili pošaljite email direktno.',
-    )
+  } catch {
+    setFormStatus('negative', t('contact.form.error'))
   } finally {
     isSubmitting.value = false
   }
@@ -777,8 +987,8 @@ async function submitForm() {
   z-index: 0;
   border-radius: 999px;
   pointer-events: none;
-  filter: blur(30px);
-  opacity: 0.42;
+  filter: blur(22px);
+  opacity: 0.3;
 }
 
 .ambient--one {
@@ -836,8 +1046,8 @@ button {
   border-radius: 999px;
   background: rgba(5, 8, 22, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.13);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(24px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(14px);
 }
 
 .brand,
@@ -933,6 +1143,92 @@ button {
       0 18px 42px rgba(37, 99, 235, 0.34),
       inset 0 1px 0 rgba(255, 255, 255, 0.25);
   }
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lang-dropdown {
+  min-height: 42px;
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(135deg, rgba(148, 163, 184, 0.16), rgba(15, 23, 42, 0.38));
+  box-shadow:
+    0 10px 22px rgba(2, 6, 23, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+
+  :deep(.q-btn__dropdown-icon) {
+    color: #cbd5e1;
+  }
+
+  :deep(.q-btn__content) {
+    gap: 8px;
+  }
+}
+
+.lang-dropdown__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
+
+  strong {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 950;
+    letter-spacing: 0.04em;
+  }
+
+  span {
+    color: rgba(226, 232, 240, 0.88);
+    font-size: 12px;
+    font-weight: 800;
+  }
+}
+
+.lang-menu {
+  min-width: 188px;
+  padding: 6px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.96));
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.35);
+}
+
+.lang-menu__item {
+  border-radius: 12px;
+  color: #e2e8f0;
+
+  &:hover {
+    background: rgba(148, 163, 184, 0.14);
+  }
+}
+
+.lang-menu__item--active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.28), rgba(124, 58, 237, 0.24));
+
+  :deep(.q-icon) {
+    color: #93c5fd;
+  }
+}
+
+.lang-menu__short {
+  display: inline-flex;
+  width: 34px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  color: #dbeafe;
+  background: rgba(59, 130, 246, 0.22);
+  border: 1px solid rgba(147, 197, 253, 0.26);
 }
 
 .hero {
@@ -1067,6 +1363,13 @@ h1 {
   }
 }
 
+.hero__microcopy {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .hero__visual {
   display: flex;
   justify-content: center;
@@ -1082,11 +1385,10 @@ h1 {
     radial-gradient(circle at top right, rgba(147, 197, 253, 0.16), transparent 20rem),
     linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.045));
   border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow:
-    0 38px 120px rgba(0, 0, 0, 0.42),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(26px);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(10px);
   animation: floatCard 7s ease-in-out infinite;
+  will-change: transform;
 }
 
 .showcase-card__shine {
@@ -1097,7 +1399,7 @@ h1 {
   height: 300px;
   border-radius: 999px;
   background: rgba(37, 99, 235, 0.36);
-  filter: blur(34px);
+  filter: blur(24px);
   pointer-events: none;
 }
 
@@ -1266,7 +1568,7 @@ h1 {
   margin-bottom: 20px;
   border-radius: 999px;
   background: linear-gradient(90deg, #60a5fa, #c084fc, #f472b6);
-  animation: widthPulse 3s ease-in-out infinite;
+  animation: widthPulse 3.2s ease-in-out infinite;
 }
 
 .showcase-grid__box {
@@ -1325,7 +1627,7 @@ h1 {
   border-radius: 999px;
   background: #22c55e;
   box-shadow: 0 0 0 7px rgba(34, 197, 94, 0.13);
-  animation: pulseDot 1.8s ease-in-out infinite;
+  animation: pulseDot 1.9s ease-in-out infinite;
 }
 
 .intro-strip {
@@ -1343,7 +1645,7 @@ h1 {
   border-radius: 34px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.05));
   border: 1px solid rgba(255, 255, 255, 0.13);
-  box-shadow: 0 28px 85px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.2);
 
   span {
     display: block;
@@ -1370,9 +1672,9 @@ h1 {
   background: rgba(255, 255, 255, 0.095);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.18),
+    0 10px 24px rgba(0, 0, 0, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(10px);
   transition: 0.25s ease;
 
   &:hover {
@@ -1594,7 +1896,7 @@ h1 {
     radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.12), transparent 28rem),
     linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
   border: 1px solid rgba(255, 255, 255, 0.145);
-  box-shadow: 0 34px 110px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.24);
 
   h2 {
     margin: 18px 0 0;
@@ -1654,7 +1956,7 @@ h1 {
   inset: 0;
   border-radius: 999px;
   border: 1px dashed rgba(147, 197, 253, 0.24);
-  animation: rotateSlow 20s linear infinite;
+  animation: rotateSlow 22s linear infinite;
 }
 
 .orbit__center,
@@ -1685,7 +1987,7 @@ h1 {
   width: 134px;
   height: 134px;
   transform: translate(-50%, -50%);
-  animation: orbitCenterPulse 4.8s ease-in-out infinite;
+  animation: orbitCenterPulse 5.4s ease-in-out infinite;
 
   .q-icon {
     font-size: 34px;
@@ -1709,63 +2011,21 @@ h1 {
   left: 50%;
   top: -53px;
   margin-left: -53px;
-  animation: orbitBobOne 5.5s ease-in-out infinite;
+  animation: orbitBobOne 5.8s ease-in-out infinite;
 }
 
 .orbit__item--two {
   right: -53px;
   top: 50%;
   margin-top: -53px;
-  animation: orbitBobTwo 5.9s ease-in-out infinite;
+  animation: orbitBobTwo 6.1s ease-in-out infinite;
 }
 
 .orbit__item--three {
   left: -53px;
   top: 50%;
   margin-top: -53px;
-  animation: orbitBobThree 6.2s ease-in-out infinite;
-}
-
-@keyframes orbitCenterPulse {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.26);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.05);
-    box-shadow: 0 30px 90px rgba(37, 99, 235, 0.2);
-  }
-}
-
-@keyframes orbitBobOne {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes orbitBobTwo {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(8px);
-  }
-}
-
-@keyframes orbitBobThree {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-7px);
-  }
+  animation: orbitBobThree 6.4s ease-in-out infinite;
 }
 
 .audience-grid {
@@ -1871,6 +2131,448 @@ h1 {
   padding-top: 42px;
 }
 
+.conversion-section {
+  padding-top: 10px;
+}
+
+.conversion-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 30px;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 18% 15%, rgba(59, 130, 246, 0.2), transparent 26rem),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
+
+  h3 {
+    margin: 0;
+    color: white;
+    font-size: clamp(28px, 3.6vw, 44px);
+    letter-spacing: -0.05em;
+    line-height: 1.05;
+    font-weight: 950;
+  }
+
+  p {
+    margin: 14px 0 0;
+    color: rgba(255, 255, 255, 0.66);
+    max-width: 720px;
+    line-height: 1.7;
+  }
+}
+
+.conversion-card__button {
+  flex: 0 0 auto;
+}
+
+.examples-section {
+  padding-top: 24px;
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.example-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 22rem),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 16px 42px rgba(2, 6, 23, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transition:
+    transform 0.24s ease,
+    border-color 0.24s ease;
+
+  &:hover {
+    transform: translateY(-7px);
+    border-color: rgba(147, 197, 253, 0.3);
+    box-shadow: 0 14px 34px rgba(2, 6, 23, 0.28);
+  }
+
+  will-change: transform;
+}
+
+.example-preview {
+  --preview-accent: #3b82f6;
+  --preview-accent-two: #7c3aed;
+  --preview-surface: rgba(15, 23, 42, 0.82);
+  padding: 14px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), var(--preview-surface));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.example-preview--blue {
+  --preview-accent: #06b6d4;
+  --preview-accent-two: #3b82f6;
+}
+
+.example-preview--pink {
+  --preview-accent: #ec4899;
+  --preview-accent-two: #8b5cf6;
+}
+
+.example-preview--cyan {
+  --preview-accent: #60a5fa;
+  --preview-accent-two: #6366f1;
+}
+
+.example-preview--neutral {
+  --preview-accent: #64748b;
+  --preview-accent-two: #8b5cf6;
+}
+
+.example-preview__bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+  }
+}
+
+.example-preview__nav {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  span {
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.76);
+    background: rgba(148, 163, 184, 0.16);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+}
+
+.example-preview__hero {
+  min-height: 96px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--preview-accent), var(--preview-accent-two));
+
+  p {
+    margin: 0;
+    max-width: 80%;
+    color: #f8fafc;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  span {
+    width: fit-content;
+    padding: 7px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 900;
+    color: #0f172a;
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.example-preview__cards {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.example-preview__card {
+  min-height: 56px;
+  border-radius: 12px;
+  background: rgba(30, 41, 59, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+
+  strong {
+    position: absolute;
+    inset: auto 8px 8px;
+    display: inline-block;
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 900;
+    color: #e2e8f0;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+  }
+}
+
+.example-preview__cards--landing {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.example-preview__footer {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.example-preview__footer--corporate {
+  justify-content: space-between;
+}
+
+.example-preview__phone {
+  width: 42px;
+  height: 74px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(15, 23, 42, 0.95);
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 6px;
+    width: 14px;
+    height: 3px;
+    border-radius: 999px;
+    transform: translateX(-50%);
+    background: rgba(226, 232, 240, 0.35);
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 16px;
+    width: 28px;
+    height: 48px;
+    border-radius: 8px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, rgba(148, 163, 184, 0.3), rgba(30, 41, 59, 0.45));
+  }
+}
+
+.example-preview__cta-pill {
+  height: 24px;
+  flex: 1;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--preview-accent), var(--preview-accent-two));
+}
+
+.example-preview__support {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 850;
+  color: #dbeafe;
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(147, 197, 253, 0.28);
+  text-align: center;
+}
+
+.example-preview__pills {
+  margin-top: 10px;
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+
+  span {
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.86);
+    background: rgba(244, 114, 182, 0.18);
+    border: 1px solid rgba(244, 114, 182, 0.32);
+  }
+}
+
+.example-preview__mini-form {
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+
+  span {
+    height: 9px;
+    border-radius: 999px;
+    background: rgba(226, 232, 240, 0.24);
+  }
+
+  div {
+    height: 20px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--preview-accent), var(--preview-accent-two));
+  }
+}
+
+.example-preview__before-after {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.example-preview__state {
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(51, 65, 85, 0.62);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+
+  strong {
+    display: block;
+    color: rgba(226, 232, 240, 0.84);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+}
+
+.example-preview__state--after {
+  background: rgba(14, 116, 144, 0.32);
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.example-preview__state-lines {
+  margin-top: 8px;
+  display: grid;
+  gap: 6px;
+
+  span {
+    display: block;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(226, 232, 240, 0.24);
+  }
+}
+
+.example-preview__state i {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 800;
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.example-card__copy {
+  h3 {
+    margin: 0;
+    color: white;
+    font-size: 27px;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    font-weight: 950;
+  }
+
+  ul {
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 800;
+    font-size: 14px;
+  }
+
+  .q-icon {
+    color: #93c5fd;
+    font-size: 18px;
+  }
+}
+
+.example-card__subtitle {
+  margin: 10px 0 0;
+  color: rgba(191, 219, 254, 0.86);
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.example-card__value {
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.66);
+  line-height: 1.65;
+}
+
+.example-card__button {
+  min-height: 40px;
+  width: 190px;
+  font-size: 13px;
+  padding: 0 14px;
+}
+
+.example-card__footer {
+  margin-top: auto;
+}
+
+.examples-footer {
+  margin-top: 28px;
+  padding: 24px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(96, 165, 250, 0.18), transparent 20rem),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: center;
+
+  h3 {
+    margin: 0;
+    color: white;
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 950;
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    margin: 10px 0 0;
+    color: rgba(255, 255, 255, 0.68);
+    line-height: 1.65;
+  }
+
+  .q-btn {
+    margin-top: 16px;
+  }
+}
+
 .offer-card {
   position: relative;
   overflow: hidden;
@@ -1886,10 +2588,8 @@ h1 {
     radial-gradient(circle at 88% 18%, rgba(216, 180, 254, 0.16), transparent 28rem),
     linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.045));
   border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow:
-    0 34px 110px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(24px);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(12px);
 
   &:before {
     content: '';
@@ -1899,7 +2599,7 @@ h1 {
     height: 340px;
     border-radius: 999px;
     background: rgba(124, 58, 237, 0.28);
-    filter: blur(36px);
+    filter: blur(24px);
     pointer-events: none;
   }
 
@@ -1912,7 +2612,7 @@ h1 {
     height: 320px;
     border-radius: 999px;
     background: rgba(37, 99, 235, 0.22);
-    filter: blur(36px);
+    filter: blur(24px);
     pointer-events: none;
   }
 
@@ -2045,13 +2745,89 @@ h1 {
   }
 }
 
+.contact-trust {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+
+  div {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 13px;
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    font-weight: 850;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .q-icon {
+    color: #93c5fd;
+    font-size: 18px;
+  }
+}
+
 .contact-form {
   padding: 18px;
   border-radius: 36px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.145), rgba(255, 255, 255, 0.05));
   border: 1px solid rgba(255, 255, 255, 0.145);
-  box-shadow: 0 34px 110px rgba(0, 0, 0, 0.32);
-  backdrop-filter: blur(24px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.form-intro {
+  margin: 2px 6px 14px;
+
+  span {
+    color: #93c5fd;
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    margin: 6px 0 0;
+    color: white;
+    font-size: 24px;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 900;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.66);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+}
+
+.form-trust {
+  margin: 0 6px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  div {
+    padding: 7px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 850;
+    color: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(147, 197, 253, 0.24);
+    background: rgba(59, 130, 246, 0.12);
+  }
+}
+
+.form-grid-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .input {
@@ -2112,60 +2888,6 @@ h1 {
   }
 }
 
-@keyframes floatCard {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(-10px) rotate(0.35deg);
-  }
-}
-
-@keyframes gradientText {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes widthPulse {
-  0%,
-  100% {
-    width: 86px;
-  }
-
-  50% {
-    width: 126px;
-  }
-}
-
-@keyframes pulseDot {
-  0%,
-  100% {
-    box-shadow: 0 0 0 7px rgba(34, 197, 94, 0.13);
-  }
-
-  50% {
-    box-shadow: 0 0 0 13px rgba(34, 197, 94, 0.04);
-  }
-}
-
-@keyframes rotateSlow {
-  from {
-    rotate: 0deg;
-  }
-
-  to {
-    rotate: 360deg;
-  }
-}
-
 @media (max-width: 1180px) {
   .hero__grid,
   .services-layout,
@@ -2195,6 +2917,10 @@ h1 {
     grid-template-columns: 1fr;
   }
 
+  .examples-grid {
+    grid-template-columns: 1fr;
+  }
+
   .process-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2221,6 +2947,17 @@ h1 {
   .nav__links,
   .nav__button {
     display: none;
+  }
+
+  .lang-dropdown {
+    min-height: 38px;
+    padding: 0 2px;
+  }
+
+  .lang-dropdown__label {
+    span {
+      display: none;
+    }
   }
 
   .brand__text span {
@@ -2296,6 +3033,38 @@ h1 {
     align-items: flex-start;
     flex-direction: column;
     padding: 22px;
+  }
+
+  .conversion-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 22px;
+  }
+
+  .conversion-card__button {
+    width: 100%;
+  }
+
+  .example-card {
+    padding: 16px;
+  }
+
+  .showcase-card,
+  .example-card,
+  .workflow__item,
+  .process-card,
+  .service-row {
+    animation: none !important;
+    transition: transform 0.18s ease;
+  }
+
+  .example-card__button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .form-grid-two {
+    grid-template-columns: 1fr;
   }
 
   .strip-button {
@@ -2375,6 +3144,36 @@ h1 {
     align-items: flex-start;
     flex-direction: column;
   }
+
+  .floating-cta {
+    display: inline-flex;
+    min-width: 170px;
+    bottom: 88px;
+  }
+  .showcase-card {
+    animation: floatCard 8s ease-in-out infinite;
+  }
+
+  .orbit__ring,
+  .orbit__center,
+  .orbit__item--one,
+  .orbit__item--two,
+  .orbit__item--three {
+    animation: none;
+  }
+
+  .example-card {
+    will-change: auto;
+  }
+
+  .ambient {
+    filter: blur(18px);
+    opacity: 0.22;
+  }
+
+  .noise {
+    opacity: 0.18;
+  }
 }
 .brand__mark {
   width: 50px;
@@ -2438,7 +3237,103 @@ h1 {
 .premium-notify--warning .q-notification__icon {
   color: #fcd34d;
 }
+@keyframes floatCard {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
 
+  50% {
+    transform: translateY(-8px) rotate(0.25deg);
+  }
+}
+
+@keyframes gradientText {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes widthPulse {
+  0%,
+  100% {
+    width: 86px;
+  }
+
+  50% {
+    width: 118px;
+  }
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 7px rgba(34, 197, 94, 0.13);
+  }
+
+  50% {
+    box-shadow: 0 0 0 12px rgba(34, 197, 94, 0.04);
+  }
+}
+
+@keyframes rotateSlow {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes orbitCenterPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.045);
+  }
+}
+
+@keyframes orbitBobOne {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes orbitBobTwo {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+@keyframes orbitBobThree {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
 .premium-notify--negative {
   border-color: rgba(248, 113, 113, 0.3);
 }
@@ -2501,6 +3396,41 @@ h1 {
   }
 }
 
+.floating-cta {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 61;
+  min-width: 190px;
+  color: white;
+  font-weight: 950;
+  background:
+    radial-gradient(circle at top left, rgba(147, 197, 253, 0.22), transparent 8rem),
+    linear-gradient(
+      135deg,
+      rgba(37, 99, 235, 0.94),
+      rgba(124, 58, 237, 0.94) 56%,
+      rgba(219, 39, 119, 0.92)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 22px 54px rgba(37, 99, 235, 0.3),
+    0 14px 36px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 .scroll-top-fade-enter-active,
 .scroll-top-fade-leave-active {
   transition:
@@ -2515,6 +3445,17 @@ h1 {
 }
 
 @media (max-width: 760px) {
+  .ambient {
+    filter: blur(18px);
+    opacity: 0.22;
+  }
+
+  .showcase-card,
+  .contact-form,
+  .offer-card {
+    backdrop-filter: blur(8px);
+  }
+
   .scroll-top {
     right: 18px;
     bottom: 18px;
