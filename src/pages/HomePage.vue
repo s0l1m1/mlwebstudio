@@ -421,15 +421,16 @@
             </p>
 
             <div class="contact-direct">
-              <a href="mailto:tvojemail@gmail.com">
+              <a href="mailto:miloslazarevic410@gmail.com">
                 <q-icon name="mail" />
-                <span>tvojemail@gmail.com</span>
+                <span>miloslazarevic410@gmail.com</span>
               </a>
-
+              <!--
               <a href="tel:+381600000000">
                 <q-icon name="phone" />
                 <span>+381 60 000 0000</span>
               </a>
+              -->
             </div>
           </div>
 
@@ -490,8 +491,10 @@
     <footer class="footer">
       <div class="container footer__inner">
         <button class="footer-brand" type="button" @click="scrollToSection('top')">
-          <div class="brand__mark">MW</div>
-          <span>Miloš Web Studio</span>
+          <div class="brand__mark brand__mark--logo">
+            <img src="/brand/ml-logo.png" alt="ML Web Studio logo" />
+          </div>
+          <span>ML Web Studio</span>
         </button>
 
         <p>Web dizajn, redizajn i prodajne stranice za male biznise.</p>
