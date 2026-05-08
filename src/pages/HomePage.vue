@@ -8,11 +8,11 @@
     <header class="nav">
       <button class="brand" type="button" @click="scrollToSection('top')">
         <div class="brand__mark brand__mark--logo">
-          <img src="/brand/ml-logo.png" alt="ML Web Studio logo" />
+          <img src="/brand/ml-logo.png" alt="ML Web Studio - izrada sajtova i web dizajn" />
         </div>
         <div class="brand__text">
           <strong>ML Web Studio</strong>
-          <span>Web dizajn za biznise</span>
+          <span>Izrada sajtova i landing stranica</span>
         </div>
       </button>
 
@@ -38,17 +38,18 @@
           <div class="hero__content" data-aos="fade-right">
             <div class="hero__badge">
               <q-icon name="auto_awesome" />
-              Premium web stranice za biznise koji žele jači prvi utisak
+              Izrada sajtova za male biznise, landing stranice i redizajn
             </div>
 
             <h1>
-              Pravimo sajtove koji izgledaju moderno,
-              <span>ozbiljno i spremno za klijente.</span>
+              Pravimo moderne sajtove,
+              <span>landing stranice i redizajn koji donose upite.</span>
             </h1>
 
             <p class="hero__lead">
-              Radimo izradu modernih sajtova za male biznise, landing stranice i redizajn postojećih
-              sajtova, sa fokusom na brzinu, mobilni prikaz, jasnu ponudu i više konkretnih upita.
+              Radimo izradu sajtova za male biznise, redizajn postojećih sajtova i landing stranice
+              za oglase. Fokus je na brzom učitavanju, dobrom mobilnom prikazu, jasnoj ponudi i
+              većem broju konkretnih upita.
             </p>
 
             <div class="hero__actions">
@@ -178,9 +179,10 @@
         <div class="wide-container">
           <div class="strip-card" data-aos="fade-up">
             <div>
-              <span>Ne pravimo samo vizuelno lep sajt.</span>
+              <span>Web dizajn nije samo lep izgled.</span>
               <strong>
-                Pravimo stranicu koja objašnjava ponudu, gradi poverenje i vodi korisnika ka akciji.
+                Pravimo sajtove koji jasno objašnjavaju ponudu, grade poverenje i vode korisnika ka
+                kontaktu.
               </strong>
             </div>
 
@@ -199,7 +201,9 @@
         <div class="container">
           <div class="section-heading section-heading--center" data-aos="fade-up">
             <span>Zašto je bitno</span>
-            <h2>Sajt često odlučuje da li korisnik šalje upit ili odlazi kod konkurencije.</h2>
+            <h2>
+              Dobar sajt često odlučuje da li korisnik šalje upit ili odlazi kod konkurencije.
+            </h2>
             <p>
               Kada neko prvi put vidi vaš biznis online, dizajn, jasnoća i brzina direktno utiču na
               poverenje. Zato svaku stranicu gradimo oko toga šta korisnik treba da razume i uradi.
@@ -228,11 +232,11 @@
           <div class="container services-layout">
             <div class="section-heading section-heading--left sticky-heading" data-aos="fade-right">
               <span>Usluge</span>
-              <h2>Šta možemo da napravimo za vaš biznis?</h2>
+              <h2>Web dizajn, izrada sajtova i redizajn za vaš biznis.</h2>
               <p>
-                Radimo web dizajn, izradu sajtova, redizajn postojećih stranica i landing stranice
-                za oglase. Svaka stranica ima jasnu namenu: da predstavi uslugu, objasni prednosti i
-                poveća šansu da posetilac pošalje upit.
+                Radimo web dizajn, izradu sajtova za firme, redizajn postojećih sajtova i landing
+                stranice za oglase. Svaki projekat ima jasnu namenu: da predstavi uslugu, objasni
+                prednosti i poveća šansu da posetilac pošalje upit.
               </p>
 
               <q-btn
@@ -330,6 +334,10 @@
           <div class="section-heading section-heading--center" data-aos="fade-up">
             <span>Za koga radimo</span>
             <h2>Najviše smisla ima za biznise kojima svaki poziv, rezervacija ili upit vredi.</h2>
+            <p>
+              Najčešće radimo sajtove za lokalne usluge, restorane, salone, ordinacije, apartmane,
+              majstore i firme kojima je potreban moderan online nastup.
+            </p>
           </div>
 
           <div class="audience-grid">
@@ -415,10 +423,10 @@
         <div class="container contact-layout">
           <div class="contact-copy" data-aos="fade-right">
             <span class="mini-label">Kontakt</span>
-            <h2>Pošaljite nam šta želite da napravimo ili link postojećeg sajta.</h2>
+            <h2>Pošaljite upit za izradu sajta, landing stranice ili redizajn.</h2>
             <p>
-              Možete poslati kratak opis biznisa, postojeći sajt ako ga imate i šta želite da
-              unapredimo. Na osnovu toga dogovaramo pravac, obim i ponudu.
+              Pošaljite kratak opis biznisa, link postojećeg sajta ako ga imate i šta želite da
+              unapredimo. Na osnovu toga predlažemo pravac, obim i sledeće korake.
             </p>
 
             <div class="contact-direct">
@@ -511,7 +519,7 @@
       <div class="container footer__inner">
         <button class="footer-brand" type="button" @click="scrollToSection('top')">
           <div class="brand__mark brand__mark--logo">
-            <img src="/brand/ml-logo.png" alt="ML Web Studio logo" />
+            <img src="/brand/ml-logo.png" alt="ML Web Studio - izrada sajtova i web dizajn" />
           </div>
           <span>ML Web Studio</span>
         </button>
@@ -535,50 +543,6 @@
 
 <script setup>
 import { reactive, ref, onMounted, onBeforeUnmount } from 'vue'
-//import { useQuasar } from 'quasar'
-
-//const $q = useQuasar()
-
-// function showNotify({ type = 'positive', message }) {
-//   const config = {
-//     positive: {
-//       icon: 'check_circle',
-//       color: 'primary',
-//       textColor: 'white',
-//     },
-//     warning: {
-//       icon: 'warning',
-//       color: 'amber-8',
-//       textColor: 'white',
-//     },
-//     negative: {
-//       icon: 'error',
-//       color: 'negative',
-//       textColor: 'white',
-//     },
-//   }
-
-//   const selected = config[type] || config.positive
-
-//   $q.notify({
-//     message,
-//     icon: selected.icon,
-//     color: selected.color,
-//     textColor: selected.textColor,
-//     position: 'top-right',
-//     timeout: 4200,
-//     progress: true,
-//     actions: [
-//       {
-//         icon: 'close',
-//         color: 'white',
-//         round: true,
-//         handler: () => {},
-//       },
-//     ],
-//     classes: `premium-notify premium-notify--${type}`,
-//   })
-// }
 
 const isSubmitting = ref(false)
 const formStatus = ref({
@@ -645,32 +609,32 @@ const services = [
   {
     number: '01',
     icon: 'web',
-    title: 'Prodajne landing stranice',
-    text: 'Pravimo stranice fokusirane na jednu jasnu ponudu, jak prvi utisak i konkretan poziv na akciju. Odlično za oglase, kampanje i promociju usluge.',
+    title: 'Landing stranice za oglase',
+    text: 'Pravimo landing stranice za oglase i kampanje, fokusirane na jednu jasnu ponudu, jak prvi utisak i konkretan poziv na akciju.',
   },
   {
     number: '02',
     icon: 'auto_fix_high',
-    title: 'Redizajn postojećeg sajta',
+    title: 'Redizajn postojećih sajtova',
     text: 'Ako sajt već postoji, ali izgleda zastarelo, nepregledno ili ne radi dobro na telefonu, pravimo moderniju i prodajno jasniju verziju.',
   },
   {
     number: '03',
     icon: 'business_center',
-    title: 'Prezentacioni sajtovi za firme',
-    text: 'Pravimo sajtove koji jasno predstavljaju usluge, prednosti, lokaciju, galeriju, kontakt i sve informacije koje kupac treba da vidi.',
+    title: 'Izrada sajtova za firme',
+    text: 'Izrađujemo moderne prezentacione sajtove za firme, lokalne usluge i male biznise, sa jasnom strukturom, kontaktom i informacijama koje kupac treba da vidi.',
   },
   {
     number: '04',
     icon: 'phone_iphone',
-    title: 'Mobilna optimizacija i UX sređivanje',
+    title: 'Mobilna optimizacija i UX dizajn',
     text: 'Sređujemo raspored, čitljivost, CTA dugmad, sekcije i korisnički tok kako bi stranica bila lakša za korišćenje.',
   },
   {
     number: '05',
     icon: 'integration_instructions',
     title: 'Kontakt forme i integracije',
-    text: 'Povezujemo kontakt forme, email slanje, mape, WhatsApp/Viber dugmad, analitiku i druge praktične elemente.',
+    text: 'Povezujemo kontakt forme, email slanje, mape, WhatsApp/Viber dugmad, osnovnu analitiku i druge elemente koji pomažu da posetilac lakše pošalje upit.',
   },
 ]
 
