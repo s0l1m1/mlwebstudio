@@ -1,6 +1,7 @@
 <template>
   <q-page class="page">
     <section class="hero">
+      <HeroAurora />
       <div class="hero-orb hero-orb--one"></div>
       <div class="hero-orb hero-orb--two"></div>
 
@@ -381,6 +382,7 @@
 import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import RevealSection from 'src/components/site/RevealSection.vue'
+import HeroAurora from 'src/components/site/HeroAurora.vue'
 
 const { t, tm } = useI18n()
 
@@ -433,6 +435,7 @@ onMounted(() => {
 
 .hero {
   position: relative;
+  overflow: hidden;
   padding: 100px 0 54px;
 }
 
