@@ -28,6 +28,36 @@ const routes = [
         name: 'contact',
         component: () => import('pages/ContactPage.vue'),
       },
+      {
+        path: 'izrada-sajtova',
+        component: () => import('pages/ServiceLandingPage.vue'),
+        props: { pageKey: 'izrada-sajtova' },
+      },
+      {
+        path: 'redizajn-sajta',
+        component: () => import('pages/ServiceLandingPage.vue'),
+        props: { pageKey: 'redizajn-sajta' },
+      },
+      {
+        path: 'landing-stranice',
+        component: () => import('pages/ServiceLandingPage.vue'),
+        props: { pageKey: 'landing-stranice' },
+      },
+      {
+        path: 'izrada-sajtova-za-majstore',
+        component: () => import('pages/ServiceLandingPage.vue'),
+        props: { pageKey: 'izrada-sajtova-za-majstore' },
+      },
+      {
+        path: 'izrada-sajtova-za-klima-servise',
+        component: () => import('pages/ServiceLandingPage.vue'),
+        props: { pageKey: 'izrada-sajtova-za-klima-servise' },
+      },
+      {
+        path: 'izrada-sajtova-za-ordinacije',
+        component: () => import('pages/ServiceLandingPage.vue'),
+        props: { pageKey: 'izrada-sajtova-za-ordinacije' },
+      },
     ],
   },
 

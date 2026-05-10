@@ -63,7 +63,43 @@
         </RevealSection>
       </div>
     </section>
+    <section class="service-pages-section">
+      <div class="container">
+        <RevealSection variant="up">
+          <div class="service-pages-head">
+            <span>{{ t('services.pagesLabel') }}</span>
+            <h2>{{ t('services.pagesTitle') }}</h2>
+            <p>{{ t('services.pagesText') }}</p>
+          </div>
+        </RevealSection>
 
+        <div class="service-pages-grid">
+          <RevealSection
+            v-for="(page, index) in servicePages"
+            :key="page.to"
+            :delay="index * 80"
+            variant="up"
+          >
+            <router-link class="service-page-card" :to="page.to">
+              <div class="service-page-card__glow"></div>
+
+              <div class="service-page-card__top">
+                <div class="service-page-card__icon">
+                  <q-icon :name="page.icon" />
+                </div>
+
+                <q-icon name="arrow_forward" class="service-page-card__arrow" />
+              </div>
+
+              <h3>{{ page.title }}</h3>
+              <p>{{ page.text }}</p>
+
+              <span>{{ t('services.pagesCta') }}</span>
+            </router-link>
+          </RevealSection>
+        </div>
+      </div>
+    </section>
     <section class="services-section">
       <div class="container services-grid">
         <RevealSection
@@ -185,6 +221,32 @@ const { t, tm, locale } = useI18n()
 
 const services = computed(() => tm('services.items'))
 const approachPoints = computed(() => tm('approach.points'))
+
+const servicePages = computed(() => {
+  const items = tm('services.pages')
+  if (Array.isArray(items) && items.length) return items
+
+  return [
+    {
+      icon: 'web',
+      title: 'Izrada sajtova',
+      text: 'Moderan sajt za mali biznis, sa jasnom ponudom, kontaktom i dobrim mobilnim prikazom.',
+      to: '/izrada-sajtova',
+    },
+    {
+      icon: 'auto_fix_high',
+      title: 'Redizajn sajta',
+      text: 'Osveženje postojećeg sajta bez gubljenja korisnog sadržaja i SEO osnove.',
+      to: '/redizajn-sajta',
+    },
+    {
+      icon: 'rocket_launch',
+      title: 'Landing stranice',
+      text: 'Jedna fokusirana stranica za konkretnu uslugu, ponudu ili kampanju.',
+      to: '/landing-stranice',
+    },
+  ]
+})
 
 const guideItems = computed(() => {
   const items = tm('services.guideItems')
@@ -1097,10 +1159,200 @@ onMounted(() => {
       inset 0 1px 0 rgba(255, 255, 255, 0.16);
   }
 }
+/* SERVICE SEO PAGES */
 
+.service-pages-section {
+  padding: 34px 0 48px;
+}
+
+.service-pages-head {
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 13px;
+    border-radius: 999px;
+    color: #dbeafe;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.14), transparent 58%),
+      linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(124, 58, 237, 0.08));
+    border: 1px solid rgba(147, 197, 253, 0.2);
+    font-size: 12px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: 0.085em;
+  }
+
+  h2 {
+    margin: 16px 0 0;
+    color: white;
+    font-size: clamp(32px, 4vw, 58px);
+    line-height: 0.98;
+    letter-spacing: -0.075em;
+    font-weight: 950;
+  }
+
+  p {
+    max-width: 760px;
+    margin: 18px auto 0;
+    color: rgba(255, 255, 255, 0.66);
+    font-size: 16px;
+    line-height: 1.72;
+  }
+}
+
+.service-pages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
+  margin-top: 34px;
+}
+
+.service-pages-grid :deep(.reveal) {
+  height: 100%;
+}
+
+.service-page-card {
+  position: relative;
+  height: 100%;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 32px;
+  color: white;
+  text-decoration: none;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at top right, rgba(96, 165, 250, 0.15), transparent 18rem),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.115);
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 260ms ease,
+    box-shadow 260ms ease,
+    filter 260ms ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-120%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.11), transparent);
+    transition: transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    border-color: rgba(147, 197, 253, 0.3);
+    box-shadow:
+      0 32px 90px rgba(37, 99, 235, 0.16),
+      0 0 42px rgba(124, 58, 237, 0.1);
+    filter: saturate(1.05);
+  }
+
+  &:hover::after {
+    transform: translateX(120%);
+  }
+
+  h3 {
+    margin: 22px 0 0;
+    color: white;
+    font-size: 27px;
+    line-height: 1.04;
+    letter-spacing: -0.055em;
+    font-weight: 950;
+  }
+
+  p {
+    flex: 1;
+    margin: 14px 0 0;
+    color: rgba(255, 255, 255, 0.64);
+    line-height: 1.68;
+  }
+
+  > span {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 22px;
+    color: #dbeafe;
+    font-size: 14px;
+    font-weight: 950;
+  }
+}
+
+.service-page-card__glow {
+  position: absolute;
+  right: -100px;
+  top: -100px;
+  z-index: -1;
+  width: 230px;
+  height: 230px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.2);
+  filter: blur(32px);
+  opacity: 0.78;
+  transition:
+    transform 360ms ease,
+    opacity 360ms ease;
+}
+
+.service-page-card:hover .service-page-card__glow {
+  transform: scale(1.15) translate(-18px, 18px);
+  opacity: 1;
+}
+
+.service-page-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.service-page-card__icon {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  color: #dbeafe;
+  background: rgba(59, 130, 246, 0.18);
+  border: 1px solid rgba(147, 197, 253, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  .q-icon {
+    font-size: 29px;
+  }
+}
+
+.service-page-card__arrow {
+  color: rgba(219, 234, 254, 0.64);
+  font-size: 23px;
+  transition:
+    transform 220ms ease,
+    color 220ms ease;
+}
+
+.service-page-card:hover .service-page-card__arrow {
+  transform: translateX(4px);
+  color: white;
+}
 /* RESPONSIVE */
 
 @media (max-width: 1150px) {
+  .service-pages-grid {
+    grid-template-columns: 1fr;
+  }
   .service-guide,
   .process-card {
     grid-template-columns: 1fr;

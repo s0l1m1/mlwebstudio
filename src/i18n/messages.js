@@ -124,6 +124,49 @@ export const messages = {
       ],
     },
     services: {
+      pagesLabel: 'Rešenja po potrebi',
+      pagesTitle: 'Posebne stranice za ono što korisnici stvarno traže.',
+      pagesText:
+        'Umesto jedne opšte stranice, najbolje rezultate često daju ciljane stranice za konkretnu uslugu, nišu ili tip biznisa.',
+      pagesCta: 'Pogledaj detalje',
+      pages: [
+        {
+          icon: 'web',
+          title: 'Izrada sajtova',
+          text: 'Moderan sajt za mali biznis, sa jasnom ponudom, kontaktom i dobrim mobilnim prikazom.',
+          to: '/izrada-sajtova',
+        },
+        {
+          icon: 'auto_fix_high',
+          title: 'Redizajn sajta',
+          text: 'Osveženje postojećeg sajta bez gubljenja korisnog sadržaja i SEO osnove.',
+          to: '/redizajn-sajta',
+        },
+        {
+          icon: 'rocket_launch',
+          title: 'Landing stranice',
+          text: 'Jedna fokusirana stranica za konkretnu uslugu, ponudu ili kampanju.',
+          to: '/landing-stranice',
+        },
+        {
+          icon: 'handyman',
+          title: 'Sajtovi za majstore',
+          text: 'Stranice za uslužne biznise gde su najbitniji brz poziv, poverenje i jasan spisak usluga.',
+          to: '/izrada-sajtova-za-majstore',
+        },
+        {
+          icon: 'ac_unit',
+          title: 'Sajtovi za klima servise',
+          text: 'Landing struktura za ugradnju, servis, čišćenje klima i hitne upite preko telefona.',
+          to: '/izrada-sajtova-za-klima-servise',
+        },
+        {
+          icon: 'medical_services',
+          title: 'Sajtovi za ordinacije',
+          text: 'Pregledne stranice za usluge, poverenje, lokaciju i lakše zakazivanje termina.',
+          to: '/izrada-sajtova-za-ordinacije',
+        },
+      ],
       label: 'Usluge',
       title: 'Sve što treba da vaš sajt izgleda ozbiljnije i donosi više upita.',
       text: 'Radim izradu sajtova, landing stranica i redizajn postojećih sajtova za male biznise — sa fokusom na moderan dizajn, mobilni prikaz, jasnu strukturu i kontakt koji korisnik lako pronađe.',
@@ -798,6 +841,49 @@ export const messages = {
       ],
     },
     services: {
+      pagesLabel: 'Solutions by need',
+      pagesTitle: 'Dedicated pages for what people actually search for.',
+      pagesText:
+        'Instead of one generic page, targeted pages for a specific service, niche or business type often perform better.',
+      pagesCta: 'View details',
+      pages: [
+        {
+          icon: 'web',
+          title: 'Website design',
+          text: 'A modern website for a small business, with a clear offer, contact flow and strong mobile layout.',
+          to: '/izrada-sajtova',
+        },
+        {
+          icon: 'auto_fix_high',
+          title: 'Website redesign',
+          text: 'A refresh of an existing website without losing useful content and basic SEO structure.',
+          to: '/redizajn-sajta',
+        },
+        {
+          icon: 'rocket_launch',
+          title: 'Landing pages',
+          text: 'One focused page for a specific service, offer or campaign.',
+          to: '/landing-stranice',
+        },
+        {
+          icon: 'handyman',
+          title: 'Websites for service businesses',
+          text: 'Pages for local service businesses where calls, trust and clear services matter most.',
+          to: '/izrada-sajtova-za-majstore',
+        },
+        {
+          icon: 'ac_unit',
+          title: 'Websites for HVAC services',
+          text: 'A landing structure for installation, repair, cleaning and urgent phone inquiries.',
+          to: '/izrada-sajtova-za-klima-servise',
+        },
+        {
+          icon: 'medical_services',
+          title: 'Websites for clinics',
+          text: 'Clear pages for services, trust, location and easier appointment booking.',
+          to: '/izrada-sajtova-za-ordinacije',
+        },
+      ],
       label: 'Services',
       title: 'Everything your website needs to look stronger and generate more inquiries.',
       text: 'I build websites, landing pages and redesign existing websites for small businesses — with a focus on modern design, mobile layout, clear structure and contact options visitors can easily find.',
