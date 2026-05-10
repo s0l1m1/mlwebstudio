@@ -40,8 +40,12 @@ function show() {
   observer?.disconnect()
 }
 
-function isMobile() {
-  return window.matchMedia('(max-width: 768px)').matches
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+function shouldSkipAnimation() {
+  return window.matchMedia('(max-width: 980px)').matches || prefersReducedMotion()
 }
 
 function isElementInViewport(element) {
@@ -57,9 +61,8 @@ onMounted(async () => {
 
   if (!target.value) return
 
-  // Najbitnije: na telefonu odmah prikaži sadržaj.
-  // Nema rizika da ostane blur/opacity state.
-  if (isMobile()) {
+  // Mobile/tablet: odmah prikaži sadržaj zbog boljeg performance-a i bez rizika od blur stanja.
+  if (shouldSkipAnimation()) {
     show()
     return
   }
@@ -82,16 +85,16 @@ onMounted(async () => {
     },
     {
       threshold: 0.01,
-      rootMargin: '160px 0px 160px 0px',
+      rootMargin: '120px 0px 120px 0px',
     },
   )
 
   observer.observe(target.value)
 
-  // Fallback da nikada ne ostane sakriveno/zamućeno.
+  // Fallback da nikad ne ostane sakriveno.
   fallbackTimer = window.setTimeout(() => {
     show()
-  }, 900)
+  }, 800)
 })
 
 onBeforeUnmount(() => {
@@ -104,39 +107,40 @@ onBeforeUnmount(() => {
 .reveal {
   height: 100%;
   opacity: 0;
-  filter: blur(10px);
+  filter: blur(4px);
   transition:
-    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 720ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 720ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 560ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay);
-  will-change: opacity, transform, filter;
+  will-change: opacity, transform;
 }
 
 .reveal--up {
-  transform: translate3d(0, 34px, 0) scale(0.985);
+  transform: translate3d(0, 22px, 0) scale(0.99);
 }
 
 .reveal--left {
-  transform: translate3d(-34px, 0, 0) scale(0.985);
+  transform: translate3d(-22px, 0, 0) scale(0.99);
 }
 
 .reveal--right {
-  transform: translate3d(34px, 0, 0) scale(0.985);
+  transform: translate3d(22px, 0, 0) scale(0.99);
 }
 
 .reveal--zoom {
-  transform: translate3d(0, 22px, 0) scale(0.955);
+  transform: translate3d(0, 16px, 0) scale(0.975);
 }
 
 .reveal--visible {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0);
+  will-change: auto;
 }
 
-/* Telefon: nikad ne skrivaj i nikad ne bluruj sadržaj */
-@media (max-width: 768px) {
+/* Telefon/tablet: nikad ne skrivaj i nikad ne bluruj sadržaj */
+@media (max-width: 980px) {
   .reveal,
   .reveal--up,
   .reveal--left,
@@ -148,7 +152,8 @@ onBeforeUnmount(() => {
     transform: none !important;
     filter: none !important;
     transition: none !important;
-    will-change: auto;
+    transition-delay: 0ms !important;
+    will-change: auto !important;
   }
 }
 
@@ -164,7 +169,8 @@ onBeforeUnmount(() => {
     transform: none !important;
     filter: none !important;
     transition: none !important;
-    will-change: auto;
+    transition-delay: 0ms !important;
+    will-change: auto !important;
   }
 }
 </style>
