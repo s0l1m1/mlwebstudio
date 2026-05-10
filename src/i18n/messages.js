@@ -523,6 +523,7 @@ export const messages = {
       ],
     },
     contact: {
+      instagramText: 'Pogledaj profil',
       quickTitle: 'Dobijate konkretan predlog, ne generičan odgovor.',
       quickText:
         'Najbolje je da pošaljete link postojećeg sajta ili kratak opis ideje. Odgovaram sa predlogom pravca, obima i sledećih koraka.',
@@ -1156,6 +1157,7 @@ export const messages = {
       ],
     },
     contact: {
+      instagramText: 'View profile',
       quickTitle: 'You get a concrete suggestion, not a generic reply.',
       quickText:
         'The best option is to send your current website link or a short project idea. I reply with direction, scope and next steps.',

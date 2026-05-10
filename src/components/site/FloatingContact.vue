@@ -33,6 +33,22 @@
         />
       </svg>
     </a>
+    <a
+      v-if="instagramHref"
+      class="floating-contact__btn floating-contact__btn--instagram"
+      :href="instagramHref"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Otvori Instagram profil"
+      title="Instagram"
+    >
+      <svg viewBox="0 0 32 32" aria-hidden="true" class="floating-contact__icon">
+        <path
+          fill="currentColor"
+          d="M10.2 4h11.6A6.2 6.2 0 0 1 28 10.2v11.6a6.2 6.2 0 0 1-6.2 6.2H10.2A6.2 6.2 0 0 1 4 21.8V10.2A6.2 6.2 0 0 1 10.2 4Zm0 2.3a3.9 3.9 0 0 0-3.9 3.9v11.6a3.9 3.9 0 0 0 3.9 3.9h11.6a3.9 3.9 0 0 0 3.9-3.9V10.2a3.9 3.9 0 0 0-3.9-3.9H10.2Zm5.8 5a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 2.3a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8Zm6-3.7a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z"
+        />
+      </svg>
+    </a>
 
     <router-link
       class="floating-contact__btn floating-contact__btn--mail"
@@ -53,6 +69,7 @@
 <script setup>
 const whatsappHref = import.meta.env.VITE_WHATSAPP_URL || ''
 const viberHref = import.meta.env.VITE_VIBER_URL || ''
+const instagramHref = import.meta.env.VITE_INSTAGRAM_URL || ''
 </script>
 
 <style scoped lang="scss">
@@ -244,6 +261,31 @@ const viberHref = import.meta.env.VITE_VIBER_URL || ''
 
   50% {
     transform: translateY(-7px);
+  }
+}
+.floating-contact__btn--instagram {
+  animation:
+    contactFloat 4.8s ease-in-out infinite 0.5s,
+    contactPulseInstagram 3.2s ease-in-out infinite;
+
+  &::before {
+    background:
+      radial-gradient(circle at 24% 0%, rgba(255, 255, 255, 0.32), transparent 54%),
+      linear-gradient(135deg, #f97316 0%, #db2777 45%, #7c3aed 100%);
+  }
+}
+@keyframes contactPulseInstagram {
+  0%,
+  100% {
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.34),
+      0 0 0 0 rgba(219, 39, 119, 0);
+  }
+
+  50% {
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.34),
+      0 0 0 10px rgba(219, 39, 119, 0.1);
   }
 }
 </style>

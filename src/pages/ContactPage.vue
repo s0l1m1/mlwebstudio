@@ -71,6 +71,22 @@
                   <strong>{{ t('contact.fastMessage') }}</strong>
                 </span>
               </a>
+              <a
+                v-if="instagramHref"
+                :href="instagramHref"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="direct-link direct-link--instagram"
+              >
+                <span class="direct-link__icon">
+                  <q-icon name="photo_camera" />
+                </span>
+
+                <span>
+                  <small>Instagram</small>
+                  <strong>{{ t('contact.instagramText') }}</strong>
+                </span>
+              </a>
             </div>
 
             <div class="contact-steps">
@@ -141,6 +157,7 @@ const contactSteps = computed(() => {
 const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'miloslazarevic410@gmail.com'
 const whatsappHref = import.meta.env.VITE_WHATSAPP_URL || ''
 const viberHref = import.meta.env.VITE_VIBER_URL || ''
+const instagramHref = import.meta.env.VITE_INSTAGRAM_URL || ''
 
 onMounted(() => {
   document.title = t('seo.contactTitle')
@@ -546,6 +563,14 @@ onMounted(() => {
   .direct-link {
     animation: none !important;
     transition: none !important;
+  }
+}
+.direct-link--instagram .direct-link__icon {
+  background: rgba(219, 39, 119, 0.16);
+  border-color: rgba(244, 114, 182, 0.24);
+
+  .q-icon {
+    color: #f9a8d4;
   }
 }
 </style>
