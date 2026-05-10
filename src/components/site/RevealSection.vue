@@ -34,32 +34,22 @@ const visible = ref(false)
 
 let observer
 let fallbackTimer
-let resizeTimer
 
 function show() {
   visible.value = true
   observer?.disconnect()
 }
 
-function isElementAlreadyInViewport(element) {
+function isMobile() {
+  return window.matchMedia('(max-width: 768px)').matches
+}
+
+function isElementInViewport(element) {
   const rect = element.getBoundingClientRect()
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight
   const viewportWidth = window.innerWidth || document.documentElement.clientWidth
 
-  return (
-    rect.top < viewportHeight * 0.96 &&
-    rect.bottom > 0 &&
-    rect.left < viewportWidth &&
-    rect.right > 0
-  )
-}
-
-function checkImmediately() {
-  if (!target.value || visible.value) return
-
-  if (isElementAlreadyInViewport(target.value)) {
-    show()
-  }
+  return rect.top < viewportHeight && rect.bottom > 0 && rect.left < viewportWidth && rect.right > 0
 }
 
 onMounted(async () => {
@@ -67,9 +57,17 @@ onMounted(async () => {
 
   if (!target.value) return
 
-  checkImmediately()
+  // Najbitnije: na telefonu odmah prikaži sadržaj.
+  // Nema rizika da ostane blur/opacity state.
+  if (isMobile()) {
+    show()
+    return
+  }
 
-  if (visible.value) return
+  if (isElementInViewport(target.value)) {
+    show()
+    return
+  }
 
   if (!('IntersectionObserver' in window)) {
     show()
@@ -84,37 +82,21 @@ onMounted(async () => {
     },
     {
       threshold: 0.01,
-      rootMargin: '120px 0px 120px 0px',
+      rootMargin: '160px 0px 160px 0px',
     },
   )
 
   observer.observe(target.value)
 
+  // Fallback da nikada ne ostane sakriveno/zamućeno.
   fallbackTimer = window.setTimeout(() => {
-    checkImmediately()
-
-    if (!visible.value) {
-      show()
-    }
-  }, 450)
-
-  window.addEventListener(
-    'resize',
-    () => {
-      window.clearTimeout(resizeTimer)
-
-      resizeTimer = window.setTimeout(() => {
-        checkImmediately()
-      }, 120)
-    },
-    { passive: true },
-  )
+    show()
+  }, 900)
 })
 
 onBeforeUnmount(() => {
   observer?.disconnect()
   window.clearTimeout(fallbackTimer)
-  window.clearTimeout(resizeTimer)
 })
 </script>
 
@@ -122,7 +104,7 @@ onBeforeUnmount(() => {
 .reveal {
   height: 100%;
   opacity: 0;
-  filter: blur(12px);
+  filter: blur(10px);
   transition:
     opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 720ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -153,36 +135,36 @@ onBeforeUnmount(() => {
   filter: blur(0);
 }
 
-@media (max-width: 700px) {
-  .reveal {
-    filter: blur(8px);
-    transition-duration: 560ms;
-  }
-
-  .reveal--up {
-    transform: translate3d(0, 22px, 0) scale(0.99);
-  }
-
-  .reveal--left {
-    transform: translate3d(-18px, 0, 0) scale(0.99);
-  }
-
-  .reveal--right {
-    transform: translate3d(18px, 0, 0) scale(0.99);
-  }
-
-  .reveal--zoom {
-    transform: translate3d(0, 16px, 0) scale(0.975);
+/* Telefon: nikad ne skrivaj i nikad ne bluruj sadržaj */
+@media (max-width: 768px) {
+  .reveal,
+  .reveal--up,
+  .reveal--left,
+  .reveal--right,
+  .reveal--zoom,
+  .reveal--visible {
+    height: 100%;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    will-change: auto;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal,
+  .reveal--up,
+  .reveal--left,
+  .reveal--right,
+  .reveal--zoom,
+  .reveal--visible {
     height: 100%;
-    opacity: 1;
-    transform: none;
-    filter: none;
-    transition: none;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    will-change: auto;
   }
 }
 </style>
