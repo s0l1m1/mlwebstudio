@@ -1095,9 +1095,33 @@ watch(
     right: auto;
     bottom: auto;
     width: 100%;
-    min-height: 180px;
+    min-height: auto;
     margin-top: 14px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-radius: 22px;
     animation: none;
+  }
+
+  .website-preview__phone .phone-speaker {
+    display: none;
+  }
+
+  .website-preview__phone strong {
+    margin-top: 0;
+    font-size: 16px;
+    line-height: 1.15;
+  }
+
+  .website-preview__phone span {
+    min-height: 38px;
+    margin-top: 0;
+    padding: 0 14px;
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 }
 
@@ -1125,6 +1149,16 @@ watch(
   .btn-primary::after,
   .btn-ghost::after {
     display: none;
+  }
+}
+@media (max-width: 420px) {
+  .website-preview__phone {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .website-preview__phone span {
+    width: 100%;
   }
 }
 </style>

@@ -523,6 +523,25 @@ export const messages = {
       ],
     },
     contact: {
+      quickTitle: 'Dobijate konkretan predlog, ne generičan odgovor.',
+      quickText:
+        'Najbolje je da pošaljete link postojećeg sajta ili kratak opis ideje. Odgovaram sa predlogom pravca, obima i sledećih koraka.',
+      emailLabel: 'Email',
+      fastMessage: 'Brza poruka',
+      steps: [
+        {
+          title: 'Pošaljete upit',
+          text: 'Kratko napišete šta vam treba, ili pošaljete link postojećeg sajta.',
+        },
+        {
+          title: 'Dobijate predlog',
+          text: 'Predlažem najbolji pravac, strukturu i realan obim posla.',
+        },
+        {
+          title: 'Dogovaramo sledeći korak',
+          text: 'Ako vam odgovara, krećemo od jasnog plana bez komplikovanja.',
+        },
+      ],
       label: 'Kontakt',
       title: 'Pošaljite upit za izradu sajta, landing stranice ili redizajn.',
       text: 'U poruci pošaljite link postojećeg sajta ako ga imate, šta želite da unapredite, koji je cilj sajta i vaš kontakt email ili telefon.',
@@ -561,6 +580,13 @@ export const messages = {
         { value: 'not_sure', label: 'Nisam siguran' },
       ],
       form: {
+        progress: 'Kratak brief · 1 minut',
+        basicInfo: 'Osnovne informacije',
+        projectInfo: 'Tip projekta',
+        detailsInfo: 'Detalji i poruka',
+        freeAnalysisTitle: 'Želim besplatnu mini analizu sajta',
+        freeAnalysisText:
+          'Ako imate postojeći sajt, pošaljite link i dobićete nekoliko konkretnih predloga za unapređenje.',
         name: 'Ime i firma',
         contact: 'Email ili telefon',
         projectType: 'Tip projekta',
@@ -1130,6 +1156,25 @@ export const messages = {
       ],
     },
     contact: {
+      quickTitle: 'You get a concrete suggestion, not a generic reply.',
+      quickText:
+        'The best option is to send your current website link or a short project idea. I reply with direction, scope and next steps.',
+      emailLabel: 'Email',
+      fastMessage: 'Quick message',
+      steps: [
+        {
+          title: 'Send an inquiry',
+          text: 'Briefly describe what you need, or send your existing website link.',
+        },
+        {
+          title: 'Get a suggestion',
+          text: 'I suggest the best direction, structure and realistic project scope.',
+        },
+        {
+          title: 'Agree on next step',
+          text: 'If it makes sense, we start from a clear plan without overcomplicating.',
+        },
+      ],
       label: 'Contact',
       title: 'Send an inquiry for a website, landing page or redesign.',
       text: 'In your message, include your current website link if available, what you want to improve, the business goal of the site and your contact email or phone.',
@@ -1168,6 +1213,13 @@ export const messages = {
         { value: 'not_sure', label: 'Not sure' },
       ],
       form: {
+        progress: 'Quick brief · 1 minute',
+        basicInfo: 'Basic information',
+        projectInfo: 'Project type',
+        detailsInfo: 'Details and message',
+        freeAnalysisTitle: 'I want a free mini website review',
+        freeAnalysisText:
+          'If you already have a website, send the link and you will get a few concrete improvement suggestions.',
         name: 'Name and company',
         contact: 'Email or phone',
         projectType: 'Project type',
