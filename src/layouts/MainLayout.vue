@@ -1,5 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf" class="mlws-layout">
+    <PremiumIntro />
     <div class="mlws-noise"></div>
     <div class="mlws-ambient mlws-ambient--one"></div>
     <div class="mlws-ambient mlws-ambient--two"></div>
@@ -23,6 +24,7 @@
 import AppHeader from 'src/components/site/AppHeader.vue'
 import AppFooter from 'src/components/site/AppFooter.vue'
 import FloatingContact from 'src/components/site/FloatingContact.vue'
+import PremiumIntro from 'src/components/site/PremiumIntro.vue'
 </script>
 
 <style scoped lang="scss">
