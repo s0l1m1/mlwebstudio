@@ -4,12 +4,64 @@ export const messages = {
       title: 'ML Web Studio | Izrada sajtova i landing stranica',
       description:
         'Izrada sajtova, landing stranica i redizajn za male biznise. Moderan dizajn, brzina i jasan put do upita.',
+      servicesTitle: 'Usluge | Izrada sajtova, landing stranica i redizajn',
+      examplesTitle: 'Primeri dizajna | ML Web Studio',
+      pricingTitle: 'Cene izrade sajtova | ML Web Studio',
+      contactTitle: 'Kontakt | ML Web Studio',
+    },
+    homePreview: {
+      kicker: 'Primer strukture',
+      title: 'Jasan prvi utisak, usluge i kontakt u nekoliko sekundi.',
+      mobile: 'Mobilno jasno',
+      speed: 'Brzo',
+      cta: 'Više upita',
+    },
+    homeTrust: {
+      items: [
+        {
+          icon: 'phone_iphone',
+          title: 'Mobilni prikaz',
+          text: 'Sajt mora izgledati dobro tamo gde ljudi najčešće dolaze — na telefonu.',
+        },
+        {
+          icon: 'bolt',
+          title: 'Brzo učitavanje',
+          text: 'Brzina i preglednost direktno utiču na prvi utisak i upite.',
+        },
+        {
+          icon: 'ads_click',
+          title: 'Jasan kontakt',
+          text: 'Korisnik mora odmah da zna gde da klikne i kako da pošalje upit.',
+        },
+      ],
+    },
+    homeCta: {
+      label: 'Krenimo praktično',
+    },
+    homeExamples: {
+      viewCase: 'Pogledaj primer',
+    },
+    homePricing: {
+      label: 'Okvirne cene',
+      title: 'Jasan početni raspon, bez skrivanja osnovne cene.',
+      text: 'Cena zavisi od obima, ali korisnik odmah može da vidi odakle projekat okvirno kreće.',
+      refresh: 'Osveženje',
+      landing: 'Landing',
+      redesign: 'Redizajn',
+    },
+    homeFinal: {
+      label: 'Spremni za bolji sajt?',
+      title: 'Pošaljite link postojećeg sajta ili kratko opišite šta želite.',
+      text: 'Dobićete konkretan predlog pravca, obima i sledećih koraka — bez komplikovanja i bez obaveze.',
     },
     nav: {
       tagline: 'Izrada sajtova i landing stranica',
       services: 'Usluge',
       approach: 'Pristup',
       process: 'Proces',
+      home: 'Početna',
+      examples: 'Primeri',
+      pricing: 'Cene',
       contact: 'Kontakt',
       sendInquiry: 'Pošalji upit',
       languageSr: 'Srpski',
@@ -37,7 +89,8 @@ export const messages = {
       implementation: 'Implementacija',
       implementationText: 'Pretvaramo dizajn u brz i responzivan sajt.',
       structure: 'Prodajna struktura',
-      structureText: 'Stranicu gradimo kao jasnu priču: problem, rešenje, poverenje, usluge i kontakt.',
+      structureText:
+        'Stranicu gradimo kao jasnu priču: problem, rešenje, poverenje, usluge i kontakt.',
       speed: 'Brzina',
       impression: 'Utisak',
       footer: 'Jasna struktura, moderan dizajn i put od posete do upita.',
@@ -72,39 +125,77 @@ export const messages = {
     },
     services: {
       label: 'Usluge',
-      title: 'Web dizajn, izrada sajtova i redizajn za vaš biznis.',
-      text: 'Radimo web dizajn, izradu sajtova za firme, redizajn postojećih sajtova i landing stranice za oglase. Svaki projekat ima jasnu namenu: da predstavi uslugu, objasni prednosti i poveća šansu da posetilac pošalje upit.',
-      cta: 'Razgovarajmo o sajtu',
+      title: 'Sve što treba da vaš sajt izgleda ozbiljnije i donosi više upita.',
+      text: 'Radim izradu sajtova, landing stranica i redizajn postojećih sajtova za male biznise — sa fokusom na moderan dizajn, mobilni prikaz, jasnu strukturu i kontakt koji korisnik lako pronađe.',
+      cta: 'Pogledaj sve usluge',
+
+      featured: 'Najtraženije',
+      guideLabel: 'Kako radimo',
+      guideTitle: 'Ne pravimo samo lepši sajt, već jasniji put do upita.',
+      guideText:
+        'Svaka usluga ima isti cilj: da korisnik brzo razume šta nudite, stekne poverenje i lako pošalje upit.',
+      bestFor: 'Najbolje za',
+      priceLink: 'Pogledaj cene',
+      processLabel: 'Proces i pristup',
+      finalCtaLabel: 'Niste sigurni šta vam treba?',
+      finalCtaTitle: 'Pošaljite link postojećeg sajta ili kratko opišite ideju.',
+      finalCtaText:
+        'Predložiću najrealniji pravac: da li je dovoljno osveženje, landing stranica, redizajn ili kompletan sajt.',
+
+      guideItems: [
+        {
+          icon: 'search',
+          title: 'Razumemo cilj',
+          text: 'Prvo se definiše šta sajt treba da postigne: više poziva, više upita, bolji prvi utisak ili jasnija ponuda.',
+        },
+        {
+          icon: 'architecture',
+          title: 'Slažemo strukturu',
+          text: 'Usluge, sadržaj, kontakt i pozivi na akciju se organizuju tako da korisnik ne luta po sajtu.',
+        },
+        {
+          icon: 'rocket_launch',
+          title: 'Pravimo bolji nastup',
+          text: 'Dizajn, mobilni prikaz, brzina i forma rade zajedno da sajt izgleda ozbiljno i vodi ka upitu.',
+        },
+      ],
+
       items: [
         {
           number: '01',
           icon: 'web',
-          title: 'Landing stranice za oglase',
-          text: 'Pravimo landing stranice za oglase i kampanje, fokusirane na jednu jasnu ponudu, jak prvi utisak i konkretan poziv na akciju.',
+          title: 'Izrada sajtova',
+          text: 'Moderan sajt za mali biznis koji jasno predstavlja usluge, gradi poverenje i vodi korisnika ka kontaktu.',
         },
         {
           number: '02',
-          icon: 'auto_fix_high',
-          title: 'Redizajn postojećih sajtova',
-          text: 'Ako sajt već postoji, ali izgleda zastarelo, nepregledno ili ne radi dobro na telefonu, pravimo moderniju i prodajno jasniju verziju.',
+          icon: 'rocket_launch',
+          title: 'Landing stranice',
+          text: 'Jedna fokusirana stranica za konkretnu uslugu, kampanju ili ponudu — sa jasnim ciljem da korisnik pošalje upit.',
         },
         {
           number: '03',
-          icon: 'business_center',
-          title: 'Izrada sajtova za firme',
-          text: 'Izrađujemo moderne prezentacione sajtove za firme, lokalne usluge i male biznise, sa jasnom strukturom, kontaktom i informacijama koje kupac treba da vidi.',
+          icon: 'auto_fix_high',
+          title: 'Redizajn postojećeg sajta',
+          text: 'Osveženje postojećeg sajta bez gubljenja korisnog sadržaja — bolji izgled, bolji raspored i jasniji kontakt flow.',
         },
         {
           number: '04',
-          icon: 'phone_iphone',
-          title: 'Mobilna optimizacija i UX dizajn',
-          text: 'Sređujemo raspored, čitljivost, CTA dugmad, sekcije i korisnički tok kako bi stranica bila lakša za korišćenje.',
+          icon: 'travel_explore',
+          title: 'SEO osnova',
+          text: 'Osnovna struktura za Google: jasniji naslovi, bolji tekstovi, meta tagovi, alt tekstovi i logična organizacija stranica.',
         },
         {
           number: '05',
-          icon: 'integration_instructions',
-          title: 'Kontakt forme i integracije',
-          text: 'Povezujemo kontakt forme, email slanje, mape, WhatsApp/Viber dugmad, osnovnu analitiku i druge elemente koji pomažu da posetilac lakše pošalje upit.',
+          icon: 'alternate_email',
+          title: 'Kontakt forme',
+          text: 'Kontakt forme, email, WhatsApp/Viber dugmad i jasni pozivi na akciju kako bi korisnik lako znao šta je sledeći korak.',
+        },
+        {
+          number: '06',
+          icon: 'public',
+          title: 'Domen i objava',
+          text: 'Pomoć oko domena, hostinga, objave sajta i osnovnog tehničkog podešavanja da sve bude spremno za korišćenje.',
         },
       ],
     },
@@ -115,6 +206,11 @@ export const messages = {
     },
     examples: {
       label: 'Primeri pravaca',
+      heroCtaPrimary: 'Pošalji upit',
+      heroCtaSecondary: 'Pogledaj cene',
+      quickAsk: 'Pošalji ideju',
+      demoNote:
+        'Ovo su demo koncepti koji pokazuju kako može izgledati moderan sajt za različite vrste biznisa. Ne predstavljaju realne klijente, već pravce dizajna i strukture.',
       title: 'Pogledajte kako vaš sajt može da izgleda i šta može da uradi za vaš biznis.',
       text: 'Ovo nisu fiksni paketi, već demo pravci koji pokazuju kako dizajn, struktura i jasni pozivi na akciju mogu pomoći da posetioci bolje razumeju ponudu i lakše pošalju upit.',
       note: 'Svaki primer prilagođavamo vašem brendu, usluzi, publici i cilju.',
@@ -147,7 +243,8 @@ export const messages = {
         {
           code: 'campaign_landing',
           title: 'Landing stranica za kampanju',
-          subtitle: 'Za oglase i promocije gde korisnik treba brzo da razume ponudu i ostavi kontakt.',
+          subtitle:
+            'Za oglase i promocije gde korisnik treba brzo da razume ponudu i ostavi kontakt.',
           description:
             'Pomaže da se pažnja ne rasipa na previše informacija, već vodi korisnika ka jednoj jasnoj akciji.',
           bullets: [
@@ -188,11 +285,7 @@ export const messages = {
             'Za sajtove koji postoje, ali ne ostavljaju dovoljno jak utisak ili ne vode korisnika ka upitu.',
           description:
             'Pomaže da postojeći sadržaj dobije bolju strukturu, moderniji izgled i jasniji put do kontakta.',
-          bullets: [
-            'Moderniji vizuelni utisak',
-            'Bolji mobilni raspored',
-            'Jasniji put do upita',
-          ],
+          bullets: ['Moderniji vizuelni utisak', 'Bolji mobilni raspored', 'Jasniji put do upita'],
           preview: {
             before: 'Pre',
             after: 'Posle',
@@ -202,6 +295,118 @@ export const messages = {
           },
         },
       ],
+    },
+    pricing: {
+      label: 'Okvirne cene',
+      title: 'Jasni početni paketi, bez nepotrebnog komplikovanja.',
+      text: 'Cene zavise od obima, broja sekcija, sadržaja i dodatnih funkcionalnosti. Ovo su okvirne početne cene koje pomažu da odmah znate šta ima smisla za vaš projekat.',
+
+      recommended: 'Preporuka',
+      startingFrom: 'početna cena',
+      featuredCta: 'Najčešći izbor',
+      bestFor: 'Najbolje za',
+
+      guideLabel: 'Kako izabrati paket',
+      guideTitle: 'Najlakše je krenuti od cilja sajta, ne od broja stranica.',
+      guideText:
+        'Nekome treba samo osveženje postojećeg sajta, nekome landing stranica za jednu ponudu, a nekome kompletna struktura. Zato su cene početne i prilagođavaju se realnom obimu.',
+      guideItems: [
+        {
+          icon: 'auto_fix_high',
+          title: 'Imate postojeći sajt?',
+          text: 'Krenite od osveženja ili redizajna ako već imate sadržaj, ali želite bolji izgled i više upita.',
+        },
+        {
+          icon: 'rocket_launch',
+          title: 'Treba vam jedna ponuda?',
+          text: 'Landing stranica je najbolji izbor za jednu uslugu, kampanju ili promociju.',
+        },
+        {
+          icon: 'hub',
+          title: 'Treba vam više stranica?',
+          text: 'Kompletan sajt se dogovara po obimu, broju stranica, sadržaju i dodatnim funkcijama.',
+        },
+      ],
+
+      packages: [
+        {
+          kicker: 'Start',
+          title: 'Osveženje postojećeg sajta',
+          price: 'od 150€',
+          text: 'Za sajtove koji već postoje, ali treba da izgledaju modernije, jasnije i bolje na telefonu.',
+          featured: false,
+          features: [
+            'Sređivanje prvog utiska',
+            'Bolji mobilni prikaz',
+            'Jasniji CTA',
+            'Osnovno SEO sređivanje',
+          ],
+        },
+        {
+          kicker: 'Landing',
+          title: 'Landing stranica',
+          price: 'od 200€',
+          text: 'Za jednu konkretnu uslugu, kampanju ili ponudu gde je cilj da korisnik pošalje upit.',
+          featured: true,
+          features: [
+            'Jedna jasna ponuda',
+            'Kontakt forma',
+            'Sekcije za benefite i poverenje',
+            'Brz i responzivan prikaz',
+          ],
+        },
+        {
+          kicker: 'Redizajn',
+          title: 'Redizajn postojećeg sajta',
+          price: 'od 250€',
+          text: 'Za biznise koji imaju sadržaj, ali žele bolji dizajn, strukturu i više upita.',
+          featured: false,
+          features: [
+            'Nova vizuelna struktura',
+            'Bolji raspored usluga',
+            'Kontakt flow',
+            'SEO-safe pristup',
+          ],
+        },
+        {
+          kicker: 'Custom',
+          title: 'Kompletan sajt',
+          price: 'po dogovoru',
+          text: 'Za firme kojima treba više stranica, dodatne sekcije, integracije ili posebna struktura.',
+          featured: false,
+          features: [
+            'Više stranica',
+            'Kontakt forme i integracije',
+            'Pomoć oko domena i objave',
+            'Dalje unapređenje po potrebi',
+          ],
+        },
+      ],
+
+      afterCardsTitle: 'Niste sigurni koji paket odgovara vašem sajtu?',
+      afterCardsText:
+        'Pošaljite mi link postojećeg sajta ili ukratko opišite šta želite. Predložiću najrealniji obim bez forsiranja skuplje opcije.',
+
+      noteTitle: 'Napomena oko cene',
+      note: 'Svaki projekat se procenjuje posebno. Ako već imate postojeći sajt, moguće je krenuti od manjeg osveženja i kasnije dodavati nove sekcije ili funkcionalnosti.',
+
+      valueLabel: 'Šta dobijate',
+      valueTitle: 'Ne plaćate samo lepši dizajn, već jasniji put do upita.',
+      valueText:
+        'Cilj je da sajt bude moderan, brz, jasan na telefonu i da korisnik lako razume šta nudite i kako da vas kontaktira.',
+      valueItems: [
+        'Moderniji vizuelni utisak',
+        'Bolji mobilni prikaz',
+        'Jasniji CTA i kontakt flow',
+        'Kontakt forma',
+        'SEO osnova',
+        'Pomoć oko objave',
+      ],
+
+      finalCtaLabel: 'Niste sigurni koji paket vam treba?',
+      finalCtaTitle: 'Pošaljite link sajta ili ideju, pa predlažem najrealniji obim.',
+      finalCtaText:
+        'Ne morate odmah znati tačan paket. Dovoljno je da pošaljete šta želite da unapredite, a ja ću predložiti pravac i okvirnu cenu.',
     },
     approach: {
       label: 'Naš pristup',
@@ -334,7 +539,18 @@ export const messages = {
       floatingCta: 'Pošalji upit',
     },
     footer: {
-      text: 'Izrada sajtova, web dizajn, redizajn i landing stranice za male biznise.',
+      text: 'Izrada modernih sajtova, landing stranica i redizajn postojećih sajtova za male biznise — sa fokusom na bolji prvi utisak, mobilni prikaz i više upita.',
+      navigation: 'Navigacija',
+      services: 'Usluge',
+      serviceWebsite: 'Izrada sajtova',
+      serviceLanding: 'Landing stranice',
+      serviceRedesign: 'Redizajn sajta',
+      pricing: 'Okvirne cene',
+      ctaLabel: 'Spremni za bolji sajt?',
+      ctaTitle: 'Pošaljite link ili ideju.',
+      ctaText: 'Dobićete konkretan predlog pravca, obima i sledećih koraka — bez komplikovanja.',
+      rights: 'Sva prava zadržana.',
+      chips: ['Moderan dizajn', 'Mobilni prikaz', 'Jasan kontakt'],
     },
     aria: {
       logoAlt: 'ML Web Studio - izrada sajtova i web dizajn',
@@ -350,11 +566,175 @@ export const messages = {
       title: 'ML Web Studio | Website design and landing pages',
       description:
         'Website design, landing pages and redesigns for small businesses. Modern look, fast performance and a clear path to inquiries.',
+      servicesTitle: 'Services | Website design, landing pages and redesigns',
+      examplesTitle: 'Design examples | ML Web Studio',
+      pricingTitle: 'Website pricing | ML Web Studio',
+      contactTitle: 'Contact | ML Web Studio',
+    },
+    homePreview: {
+      kicker: 'Structure preview',
+      title: 'Clear first impression, services and contact in just a few seconds.',
+      mobile: 'Mobile clarity',
+      speed: 'Fast',
+      cta: 'More inquiries',
+    },
+    homeTrust: {
+      items: [
+        {
+          icon: 'phone_iphone',
+          title: 'Mobile layout',
+          text: 'The website must look strong where most visitors arrive — on mobile.',
+        },
+        {
+          icon: 'bolt',
+          title: 'Fast loading',
+          text: 'Speed and clarity directly affect first impression and inquiry intent.',
+        },
+        {
+          icon: 'ads_click',
+          title: 'Clear contact path',
+          text: 'Visitors need to know where to click and how to send an inquiry immediately.',
+        },
+      ],
+    },
+    homeCta: {
+      label: 'Start practically',
+    },
+    homeExamples: {
+      viewCase: 'View example',
+    },
+    homePricing: {
+      label: 'Starting prices',
+      title: 'A clear starting range without hiding the basics.',
+      text: 'Pricing depends on scope, but visitors can immediately understand where a project starts.',
+      refresh: 'Refresh',
+      landing: 'Landing',
+      redesign: 'Redesign',
+    },
+    homeFinal: {
+      label: 'Ready for a better website?',
+      title: 'Send your current website link or briefly describe what you need.',
+      text: 'You will get a concrete direction, scope suggestion and next steps — without pressure or unnecessary complexity.',
+    },
+    pricing: {
+      label: 'Pricing',
+      title: 'Clear starting packages without unnecessary complexity.',
+      text: 'Pricing depends on scope, number of sections, content and additional functionality. These are starting ranges that help you understand what makes sense for your project.',
+
+      recommended: 'Recommended',
+      startingFrom: 'starting price',
+      featuredCta: 'Most popular choice',
+      bestFor: 'Best for',
+
+      guideLabel: 'How to choose',
+      guideTitle: 'The easiest way is to start from the website goal, not the number of pages.',
+      guideText:
+        'Some businesses only need a refresh, some need a landing page for one offer, and some need a complete structure. That is why prices are starting points and depend on real scope.',
+      guideItems: [
+        {
+          icon: 'auto_fix_high',
+          title: 'Already have a website?',
+          text: 'Start with a refresh or redesign if you already have content but need better design and more inquiries.',
+        },
+        {
+          icon: 'rocket_launch',
+          title: 'Need one clear offer?',
+          text: 'A landing page is the best choice for one service, campaign or promotion.',
+        },
+        {
+          icon: 'hub',
+          title: 'Need multiple pages?',
+          text: 'A complete website depends on scope, number of pages, content and additional functionality.',
+        },
+      ],
+
+      packages: [
+        {
+          kicker: 'Start',
+          title: 'Website refresh',
+          price: 'from €150',
+          text: 'For existing websites that need a more modern look, clearer structure and better mobile experience.',
+          featured: false,
+          features: [
+            'Better first impression',
+            'Improved mobile layout',
+            'Clearer CTA',
+            'Basic SEO cleanup',
+          ],
+        },
+        {
+          kicker: 'Landing',
+          title: 'Landing page',
+          price: 'from €200',
+          text: 'For one specific service, campaign or offer where the goal is to generate inquiries.',
+          featured: true,
+          features: [
+            'One clear offer',
+            'Contact form',
+            'Benefit and trust sections',
+            'Fast responsive layout',
+          ],
+        },
+        {
+          kicker: 'Redesign',
+          title: 'Existing website redesign',
+          price: 'from €250',
+          text: 'For businesses that already have content but need better design, structure and more inquiries.',
+          featured: false,
+          features: [
+            'New visual structure',
+            'Better service layout',
+            'Contact flow',
+            'SEO-safe approach',
+          ],
+        },
+        {
+          kicker: 'Custom',
+          title: 'Complete website',
+          price: 'by agreement',
+          text: 'For businesses that need multiple pages, additional sections, integrations or a custom structure.',
+          featured: false,
+          features: [
+            'Multiple pages',
+            'Forms and integrations',
+            'Domain and launch support',
+            'Further improvements if needed',
+          ],
+        },
+      ],
+
+      afterCardsTitle: 'Not sure which package fits your website?',
+      afterCardsText:
+        'Send your current website link or briefly describe what you need. I will suggest the most realistic scope without pushing the more expensive option.',
+
+      noteTitle: 'Pricing note',
+      note: 'Every project is estimated individually. If you already have a website, we can start with a smaller refresh and later add new sections or functionality.',
+
+      valueLabel: 'What you get',
+      valueTitle: 'You are not only paying for better design, but for a clearer path to inquiries.',
+      valueText:
+        'The goal is to make your website modern, fast, clear on mobile and easy for visitors to understand and contact you.',
+      valueItems: [
+        'More modern visual impression',
+        'Better mobile layout',
+        'Clearer CTA and contact flow',
+        'Contact form',
+        'Basic SEO setup',
+        'Launch support',
+      ],
+
+      finalCtaLabel: 'Not sure which package you need?',
+      finalCtaTitle: 'Send your website link or idea and I will suggest the most realistic scope.',
+      finalCtaText:
+        'You do not need to know the exact package immediately. Send what you want to improve and I will suggest the direction and estimated price.',
     },
     nav: {
       tagline: 'Website design and landing pages',
       services: 'Services',
       approach: 'Approach',
+      home: 'Home',
+      examples: 'Examples',
+      pricing: 'Pricing',
       process: 'Process',
       contact: 'Contact',
       sendInquiry: 'Send inquiry',
@@ -383,14 +763,16 @@ export const messages = {
       implementation: 'Implementation',
       implementationText: 'We turn design into a fast responsive website.',
       structure: 'Conversion structure',
-      structureText: 'We build each page as a clear story: problem, solution, trust, services and contact.',
+      structureText:
+        'We build each page as a clear story: problem, solution, trust, services and contact.',
       speed: 'Speed',
       impression: 'First impression',
       footer: 'Clear structure, modern design and a direct path from visit to inquiry.',
     },
     intro: {
       label: 'Web design is more than visual polish.',
-      title: 'We build websites that explain your offer, build trust and guide visitors to contact.',
+      title:
+        'We build websites that explain your offer, build trust and guide visitors to contact.',
       button: 'How we work',
     },
     problem: {
@@ -417,39 +799,77 @@ export const messages = {
     },
     services: {
       label: 'Services',
-      title: 'Website design, development and redesign for your business.',
-      text: 'We provide web design, company websites, redesigns and campaign landing pages. Every project has one purpose: present your offer clearly, highlight value and increase inquiry intent.',
-      cta: "Let's discuss your website",
+      title: 'Everything your website needs to look stronger and generate more inquiries.',
+      text: 'I build websites, landing pages and redesign existing websites for small businesses — with a focus on modern design, mobile layout, clear structure and contact options visitors can easily find.',
+      cta: 'View all services',
+
+      featured: 'Most requested',
+      guideLabel: 'How it works',
+      guideTitle: 'We are not only making a prettier website, but a clearer path to inquiries.',
+      guideText:
+        'Every service has the same goal: help visitors quickly understand your offer, trust your business and easily send an inquiry.',
+      bestFor: 'Best for',
+      priceLink: 'View pricing',
+      processLabel: 'Process and approach',
+      finalCtaLabel: 'Not sure what you need?',
+      finalCtaTitle: 'Send your current website link or briefly describe your idea.',
+      finalCtaText:
+        'I will suggest the most realistic direction: refresh, landing page, redesign or a complete website.',
+
+      guideItems: [
+        {
+          icon: 'search',
+          title: 'Understand the goal',
+          text: 'First we define what the website should achieve: more calls, more inquiries, stronger first impression or clearer offer.',
+        },
+        {
+          icon: 'architecture',
+          title: 'Structure the content',
+          text: 'Services, content, contact and calls to action are organized so visitors do not get lost.',
+        },
+        {
+          icon: 'rocket_launch',
+          title: 'Build a stronger presence',
+          text: 'Design, mobile layout, speed and forms work together to make the website look serious and lead to inquiries.',
+        },
+      ],
+
       items: [
         {
           number: '01',
           icon: 'web',
-          title: 'Landing pages for campaigns',
-          text: 'We craft landing pages focused on one clear offer, a strong first impression and a direct call to action.',
+          title: 'Website design',
+          text: 'A modern website for a small business that clearly presents services, builds trust and guides visitors toward contact.',
         },
         {
           number: '02',
-          icon: 'auto_fix_high',
-          title: 'Existing website redesigns',
-          text: 'If your current site feels outdated, unclear or weak on mobile, we redesign it into a cleaner, stronger conversion asset.',
+          icon: 'rocket_launch',
+          title: 'Landing pages',
+          text: 'One focused page for a specific service, campaign or offer — with a clear goal of turning visitors into inquiries.',
         },
         {
           number: '03',
-          icon: 'business_center',
-          title: 'Business website development',
-          text: 'We build modern presentation websites for companies and local services, with clear structure and practical contact flow.',
+          icon: 'auto_fix_high',
+          title: 'Website redesign',
+          text: 'A refresh of an existing website without losing useful content — better look, better structure and clearer contact flow.',
         },
         {
           number: '04',
-          icon: 'phone_iphone',
-          title: 'Mobile optimization and UX',
-          text: 'We improve layout, readability, CTA hierarchy and user flow so visitors can act faster and easier.',
+          icon: 'travel_explore',
+          title: 'Basic SEO setup',
+          text: 'Basic Google-friendly structure: clearer headings, better copy, meta tags, alt text and logical page organization.',
         },
         {
           number: '05',
-          icon: 'integration_instructions',
-          title: 'Contact forms and integrations',
-          text: 'We connect forms, email delivery, maps and core integrations that help visitors send an inquiry with less friction.',
+          icon: 'alternate_email',
+          title: 'Contact forms',
+          text: 'Contact forms, email, WhatsApp/Viber buttons and clear calls to action so visitors know exactly what to do next.',
+        },
+        {
+          number: '06',
+          icon: 'public',
+          title: 'Domain and launch',
+          text: 'Support with domain, hosting, website launch and basic technical setup so everything is ready to use.',
         },
       ],
     },
@@ -460,6 +880,11 @@ export const messages = {
     },
     examples: {
       label: 'Example directions',
+      heroCtaPrimary: 'Send inquiry',
+      heroCtaSecondary: 'View pricing',
+      quickAsk: 'Send idea',
+      demoNote:
+        'These are demo concepts showing what a modern website can look like for different types of businesses. They are not real client projects, but design and structure directions.',
       title: 'See what your website could look like and what it can do for your business.',
       text: 'These are not fixed packages, but demo directions showing how design, structure and clear calls to action can help visitors understand the offer and send an inquiry more easily.',
       note: 'Every example is adapted to your brand, service, audience and goal.',
@@ -497,11 +922,7 @@ export const messages = {
             'For ads and promotions where the user needs to understand the offer and leave contact quickly.',
           description:
             'Keeps the visitor focused on one clear action instead of spreading attention across too many details.',
-          bullets: [
-            'One clear offer',
-            'Benefit sections and CTA',
-            'Contact form in focus',
-          ],
+          bullets: ['One clear offer', 'Benefit sections and CTA', 'Contact form in focus'],
           preview: {
             heroTitle: 'One offer. Clear result.',
             cta: 'Send inquiry',
@@ -675,14 +1096,27 @@ export const messages = {
         note: 'You get a practical next-step suggestion for direction, scope and implementation.',
         validation: 'Please fill in your name, contact and a short message.',
         notSelected: 'Not selected',
-        endpointMissing: 'The contact form is not connected right now. Please send an email directly.',
+        endpointMissing:
+          'The contact form is not connected right now. Please send an email directly.',
         success: 'Your inquiry has been sent. We will reply soon with a concrete proposal.',
         error: 'Sending failed. Please try again or contact us directly by email.',
       },
       floatingCta: 'Send inquiry',
     },
     footer: {
-      text: 'Website design, redesign and landing pages for small businesses.',
+      text: 'Modern websites, landing pages and redesigns for small businesses — focused on stronger first impression, mobile layout and more inquiries.',
+      navigation: 'Navigation',
+      services: 'Services',
+      serviceWebsite: 'Website design',
+      serviceLanding: 'Landing pages',
+      serviceRedesign: 'Website redesign',
+      pricing: 'Starting prices',
+      ctaLabel: 'Ready for a better website?',
+      ctaTitle: 'Send your link or idea.',
+      ctaText:
+        'You will get a concrete direction, scope suggestion and next steps — without unnecessary complexity.',
+      rights: 'All rights reserved.',
+      chips: ['Modern design', 'Mobile layout', 'Clear contact'],
     },
     aria: {
       logoAlt: 'ML Web Studio - website design and development',
