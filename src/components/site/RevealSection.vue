@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 defineProps({
   delay: {
@@ -33,28 +33,88 @@ const target = ref(null)
 const visible = ref(false)
 
 let observer
+let fallbackTimer
+let resizeTimer
 
-onMounted(() => {
+function show() {
+  visible.value = true
+  observer?.disconnect()
+}
+
+function isElementAlreadyInViewport(element) {
+  const rect = element.getBoundingClientRect()
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth
+
+  return (
+    rect.top < viewportHeight * 0.96 &&
+    rect.bottom > 0 &&
+    rect.left < viewportWidth &&
+    rect.right > 0
+  )
+}
+
+function checkImmediately() {
+  if (!target.value || visible.value) return
+
+  if (isElementAlreadyInViewport(target.value)) {
+    show()
+  }
+}
+
+onMounted(async () => {
+  await nextTick()
+
   if (!target.value) return
+
+  checkImmediately()
+
+  if (visible.value) return
+
+  if (!('IntersectionObserver' in window)) {
+    show()
+    return
+  }
 
   observer = new IntersectionObserver(
     ([entry]) => {
-      if (entry.isIntersecting) {
-        visible.value = true
-        observer?.disconnect()
+      if (entry.isIntersecting || entry.intersectionRatio > 0) {
+        show()
       }
     },
     {
-      threshold: 0.14,
-      rootMargin: '0px 0px -70px 0px',
+      threshold: 0.01,
+      rootMargin: '120px 0px 120px 0px',
     },
   )
 
   observer.observe(target.value)
+
+  fallbackTimer = window.setTimeout(() => {
+    checkImmediately()
+
+    if (!visible.value) {
+      show()
+    }
+  }, 450)
+
+  window.addEventListener(
+    'resize',
+    () => {
+      window.clearTimeout(resizeTimer)
+
+      resizeTimer = window.setTimeout(() => {
+        checkImmediately()
+      }, 120)
+    },
+    { passive: true },
+  )
 })
 
 onBeforeUnmount(() => {
   observer?.disconnect()
+  window.clearTimeout(fallbackTimer)
+  window.clearTimeout(resizeTimer)
 })
 </script>
 
@@ -91,6 +151,29 @@ onBeforeUnmount(() => {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0);
+}
+
+@media (max-width: 700px) {
+  .reveal {
+    filter: blur(8px);
+    transition-duration: 560ms;
+  }
+
+  .reveal--up {
+    transform: translate3d(0, 22px, 0) scale(0.99);
+  }
+
+  .reveal--left {
+    transform: translate3d(-18px, 0, 0) scale(0.99);
+  }
+
+  .reveal--right {
+    transform: translate3d(18px, 0, 0) scale(0.99);
+  }
+
+  .reveal--zoom {
+    transform: translate3d(0, 16px, 0) scale(0.975);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

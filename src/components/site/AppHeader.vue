@@ -78,7 +78,7 @@
           round
           dense
           class="mobile-trigger"
-          aria-label="Otvori meni"
+          :aria-label="drawerOpen ? 'Zatvori meni' : 'Otvori meni'"
           @click="drawerOpen = true"
         >
           <q-icon name="menu" size="md" />
@@ -86,68 +86,61 @@
       </div>
     </div>
 
-    <q-drawer
-      v-model="drawerOpen"
-      side="right"
-      overlay
-      behavior="mobile"
-      :width="340"
-      class="mobile-drawer"
-    >
-      <div class="mobile-drawer__ambient"></div>
+    <transition name="mobile-menu">
+      <div v-if="drawerOpen" class="mobile-menu" @click.self="drawerOpen = false">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__ambient"></div>
 
-      <div class="mobile-drawer__head">
-        <router-link to="/" class="mobile-brand" @click="drawerOpen = false">
-          <img src="/brand/ml-logo.png" :alt="t('aria.logoAlt')" width="44" height="44" />
-          <div>
-            <strong>ML Web Studio</strong>
-            <span>{{ t('nav.tagline') }}</span>
+          <div class="mobile-menu__head">
+            <router-link to="/" class="mobile-brand" @click="drawerOpen = false">
+              <img src="/brand/ml-logo.png" :alt="t('aria.logoAlt')" width="44" height="44" />
+              <div>
+                <strong>ML Web Studio</strong>
+                <span>{{ t('nav.tagline') }}</span>
+              </div>
+            </router-link>
+
+            <q-btn flat round dense color="white" class="drawer-close" @click="drawerOpen = false">
+              <q-icon name="close" />
+            </q-btn>
           </div>
-        </router-link>
 
-        <q-btn flat round dense color="white" class="drawer-close" @click="drawerOpen = false">
-          <q-icon name="close" />
-        </q-btn>
-      </div>
+          <nav class="mobile-menu__nav" aria-label="Mobilna navigacija">
+            <router-link
+              v-for="link in navLinks"
+              :key="link.to"
+              :to="link.to"
+              class="mobile-menu__link"
+              active-class="is-active"
+              exact-active-class="is-active"
+              @click="drawerOpen = false"
+            >
+              <span>{{ link.label }}</span>
+              <q-icon name="arrow_forward" />
+            </router-link>
+          </nav>
 
-      <q-list class="mobile-drawer__list">
-        <q-item
-          v-for="link in navLinks"
-          :key="link.to"
-          clickable
-          :to="link.to"
-          active-class="is-active"
-          @click="drawerOpen = false"
-        >
-          <q-item-section>
-            <span>{{ link.label }}</span>
-          </q-item-section>
+          <div class="mobile-menu__bottom">
+            <router-link class="mobile-menu__cta" to="/kontakt" @click="drawerOpen = false">
+              <span>{{ t('nav.sendInquiry') }}</span>
+              <q-icon name="arrow_forward" />
+            </router-link>
 
-          <q-item-section side>
-            <q-icon name="arrow_forward" />
-          </q-item-section>
-        </q-item>
-      </q-list>
-
-      <div class="mobile-drawer__bottom">
-        <router-link class="mobile-drawer__cta" to="/kontakt" @click="drawerOpen = false">
-          <span>{{ t('nav.sendInquiry') }}</span>
-          <q-icon name="arrow_forward" />
-        </router-link>
-
-        <div class="mobile-drawer__lang">
-          <button
-            v-for="language in languages"
-            :key="language.code"
-            type="button"
-            :class="{ 'is-active': locale === language.code }"
-            @click="setLanguage(language.code)"
-          >
-            {{ language.short }}
-          </button>
+            <div class="mobile-menu__lang">
+              <button
+                v-for="language in languages"
+                :key="language.code"
+                type="button"
+                :class="{ 'is-active': locale === language.code }"
+                @click="setLanguage(language.code)"
+              >
+                {{ language.short }}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </q-drawer>
+    </transition>
   </q-header>
 </template>
 
@@ -194,6 +187,11 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
+  document.body.style.overflow = ''
+})
+
+watch(drawerOpen, (isOpen) => {
+  document.body.style.overflow = isOpen ? 'hidden' : ''
 })
 
 watch(
@@ -381,7 +379,8 @@ watch(
     color 200ms ease,
     background-color 200ms ease,
     transform 200ms ease,
-    box-shadow 200ms ease;
+    box-shadow 200ms ease,
+    border-color 200ms ease;
 
   span {
     position: relative;
@@ -419,7 +418,7 @@ watch(
     background:
       radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.16), transparent 62%),
       linear-gradient(135deg, rgba(59, 130, 246, 0.24), rgba(124, 58, 237, 0.16));
-    border: 1px solid rgba(147, 197, 253, 0.2);
+    border-color: rgba(147, 197, 253, 0.2);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.12),
       0 12px 32px rgba(37, 99, 235, 0.16);
@@ -441,7 +440,7 @@ watch(
 }
 
 .header-cta,
-.mobile-drawer__cta {
+.mobile-menu__cta {
   position: relative;
   overflow: hidden;
   display: inline-flex;
@@ -598,30 +597,54 @@ watch(
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* MOBILE DRAWER */
+/* MOBILE MENU */
 
-.mobile-drawer {
-  position: relative;
-  overflow: hidden;
-  color: white;
-  background:
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.26), transparent 18rem),
-    radial-gradient(circle at bottom left, rgba(219, 39, 119, 0.16), transparent 16rem), #07111f;
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+  pointer-events: auto;
+  background: rgba(2, 6, 23, 0.62);
+  backdrop-filter: blur(12px);
 }
 
-.mobile-drawer__ambient {
+.mobile-menu__panel {
+  position: relative;
+  width: min(360px, 100%);
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 30px;
+  color: white;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at top right, rgba(59, 130, 246, 0.28), transparent 18rem),
+    radial-gradient(circle at bottom left, rgba(219, 39, 119, 0.18), transparent 16rem),
+    linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(3, 7, 18, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu__ambient {
   position: absolute;
   right: -90px;
   top: -80px;
+  z-index: -1;
   width: 260px;
   height: 260px;
   pointer-events: none;
   border-radius: 999px;
-  background: rgba(59, 130, 246, 0.2);
+  background: rgba(59, 130, 246, 0.22);
   filter: blur(30px);
 }
 
-.mobile-drawer__head {
+.mobile-menu__head {
   position: relative;
   z-index: 2;
   display: flex;
@@ -671,63 +694,74 @@ watch(
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.mobile-drawer__list {
+.mobile-menu__nav {
   position: relative;
   z-index: 2;
+  display: grid;
+  gap: 8px;
   padding: 12px 14px;
+}
 
-  .q-item {
-    min-height: 56px;
-    margin-bottom: 8px;
-    border-radius: 18px;
-    color: rgba(255, 255, 255, 0.78);
-    background: rgba(255, 255, 255, 0.045);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    font-size: 15px;
-    font-weight: 900;
-    transition:
-      transform 200ms ease,
-      background-color 200ms ease,
-      border-color 200ms ease;
+.mobile-menu__link {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 16px;
+  border-radius: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 15px;
+  font-weight: 900;
+  transition:
+    transform 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
 
-    .q-icon {
-      color: rgba(219, 234, 254, 0.64);
-      font-size: 18px;
-      transition: transform 200ms ease;
-    }
+  .q-icon {
+    color: rgba(219, 234, 254, 0.64);
+    font-size: 18px;
+    transition: transform 200ms ease;
+  }
 
-    &:hover {
-      transform: translateX(3px);
-      color: white;
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(147, 197, 253, 0.18);
-    }
+  &:active {
+    transform: scale(0.985);
+  }
 
-    &:hover .q-icon {
-      transform: translateX(3px);
-    }
+  &:hover,
+  &.is-active,
+  &.router-link-active {
+    color: white;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.32), rgba(124, 58, 237, 0.18));
+    border-color: rgba(147, 197, 253, 0.25);
+    box-shadow: 0 16px 42px rgba(37, 99, 235, 0.14);
+  }
 
-    &.is-active {
-      color: white;
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.32), rgba(124, 58, 237, 0.18));
-      border-color: rgba(147, 197, 253, 0.25);
-      box-shadow: 0 16px 42px rgba(37, 99, 235, 0.14);
-    }
+  &:hover .q-icon,
+  &.is-active .q-icon,
+  &.router-link-active .q-icon {
+    transform: translateX(3px);
+    color: white;
   }
 }
 
-.mobile-drawer__bottom {
+.mobile-menu__bottom {
   position: relative;
   z-index: 2;
-  padding: 10px 18px 22px;
+  margin-top: auto;
+  padding: 14px 18px 22px;
 }
 
-.mobile-drawer__cta {
+.mobile-menu__cta {
   width: 100%;
-  min-height: 50px;
+  min-height: 52px;
 }
 
-.mobile-drawer__lang {
+.mobile-menu__lang {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
@@ -758,6 +792,31 @@ watch(
       box-shadow: 0 14px 34px rgba(37, 99, 235, 0.22);
     }
   }
+}
+
+/* MOBILE MENU TRANSITION */
+
+.mobile-menu-enter-active,
+.mobile-menu-leave-active {
+  transition: opacity 220ms ease;
+}
+
+.mobile-menu-enter-from,
+.mobile-menu-leave-to {
+  opacity: 0;
+}
+
+.mobile-menu-enter-active .mobile-menu__panel,
+.mobile-menu-leave-active .mobile-menu__panel {
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 260ms ease;
+}
+
+.mobile-menu-enter-from .mobile-menu__panel,
+.mobile-menu-leave-to .mobile-menu__panel {
+  opacity: 0;
+  transform: translateX(28px) scale(0.98);
 }
 
 /* ANIMATIONS */
@@ -835,18 +894,20 @@ watch(
   .brand__logo,
   .desktop-nav__link,
   .header-cta,
-  .mobile-drawer__cta,
+  .mobile-menu,
+  .mobile-menu__panel,
+  .mobile-menu__link,
+  .mobile-menu__cta,
+  .mobile-menu__lang button,
   .lang-dropdown,
-  .lang-menu__item,
-  .mobile-drawer__list .q-item,
-  .mobile-drawer__lang button {
+  .lang-menu__item {
     animation: none !important;
     transition: none !important;
   }
 
   .brand__logo::after,
   .header-cta::after,
-  .mobile-drawer__cta::after {
+  .mobile-menu__cta::after {
     display: none;
   }
 }
