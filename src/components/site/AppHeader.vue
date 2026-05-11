@@ -167,6 +167,7 @@ const navLinks = computed(() => [
   { to: '/', label: t('nav.home') },
   { to: '/usluge', label: t('nav.services') },
   { to: '/primeri', label: t('nav.examples') },
+  { to: '/products', label: t('nav.products') },
   { to: '/cene', label: t('nav.pricing') },
   { to: '/kontakt', label: t('nav.contact') },
 ])

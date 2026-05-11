@@ -56,6 +56,7 @@ export const messages = {
     },
     nav: {
       tagline: 'Izrada sajtova i landing stranica',
+      products: 'Proizvodi',
       services: 'Usluge',
       approach: 'Pristup',
       process: 'Proces',
@@ -804,6 +805,7 @@ export const messages = {
       approach: 'Approach',
       home: 'Home',
       examples: 'Examples',
+      products: 'Products',
       pricing: 'Pricing',
       process: 'Process',
       contact: 'Contact',
