@@ -58,6 +58,14 @@ const routes = [
         component: () => import('pages/ServiceLandingPage.vue'),
         props: { pageKey: 'izrada-sajtova-za-ordinacije' },
       },
+      {
+        path: '/products/servicepro-landing-kit',
+        component: () => import('pages/ServiceProProductPage.vue'),
+      },
+      {
+        path: '/digitalni-proizvodi/servicepro-landing-kit',
+        redirect: '/products/servicepro-landing-kit',
+      },
     ],
   },
 

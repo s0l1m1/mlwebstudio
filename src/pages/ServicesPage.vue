@@ -185,7 +185,46 @@
         </RevealSection>
       </div>
     </section>
+    <section class="product-promo-section">
+      <div class="container">
+        <RevealSection variant="zoom">
+          <div class="product-promo-card">
+            <div>
+              <span>{{ locale === 'en' ? 'Digital product' : 'Digitalni proizvod' }}</span>
+              <h2>ServicePro Landing Kit</h2>
+              <p>
+                {{
+                  locale === 'en'
+                    ? 'A ready-made Vue + Quasar landing page kit for freelancers and agencies building websites for local service businesses.'
+                    : 'Gotov Vue + Quasar landing page kit za freelancere i agencije koji prave sajtove za lokalne biznise.'
+                }}
+              </p>
+            </div>
 
+            <div class="product-promo-actions">
+              <q-btn
+                unelevated
+                rounded
+                no-caps
+                class="btn-primary"
+                :label="locale === 'en' ? 'View product' : 'Pogledaj proizvod'"
+                to="/products/servicepro-landing-kit"
+              />
+
+              <q-btn
+                outline
+                rounded
+                no-caps
+                class="btn-ghost"
+                label="Live demo"
+                href="https://servicepro-landing-kit.vercel.app/?demo=true&lang=en&industry=hvac&business=CoolFix%20Services&city=Houston&theme=blue"
+                target="_blank"
+              />
+            </div>
+          </div>
+        </RevealSection>
+      </div>
+    </section>
     <section class="final-cta-section">
       <div class="container">
         <RevealSection variant="zoom">
@@ -244,6 +283,15 @@ const servicePages = computed(() => {
       title: 'Landing stranice',
       text: 'Jedna fokusirana stranica za konkretnu uslugu, ponudu ili kampanju.',
       to: '/landing-stranice',
+    },
+    {
+      icon: 'shopping_bag',
+      title: locale.value === 'en' ? 'ServicePro Landing Kit' : 'ServicePro Landing Kit',
+      text:
+        locale.value === 'en'
+          ? 'A multilingual Vue + Quasar landing page template for local service businesses, freelancers and agencies.'
+          : 'Vue + Quasar template za moderne landing stranice lokalnih biznisa, freelancere i male agencije.',
+      to: '/products/servicepro-landing-kit',
     },
   ]
 })
@@ -1473,6 +1521,75 @@ onMounted(() => {
   .btn-ghost::after,
   .service-btn::after {
     display: none;
+  }
+}
+.product-promo-section {
+  padding: 0 0 72px;
+}
+
+.product-promo-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+  padding: clamp(30px, 4vw, 50px);
+  border-radius: 42px;
+  color: white;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(34, 197, 94, 0.18), transparent 28rem),
+    radial-gradient(circle at 94% 14%, rgba(59, 130, 246, 0.22), transparent 28rem),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.045));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 30px 94px rgba(0, 0, 0, 0.26);
+
+  span {
+    color: #93c5fd;
+    font-size: 13px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  h2 {
+    max-width: 840px;
+    margin: 12px 0 0;
+    color: white;
+    font-size: clamp(30px, 4vw, 56px);
+    line-height: 0.98;
+    letter-spacing: -0.07em;
+    font-weight: 950;
+  }
+
+  p {
+    max-width: 780px;
+    margin: 16px 0 0;
+    color: rgba(255, 255, 255, 0.66);
+    line-height: 1.72;
+  }
+}
+
+.product-promo-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 980px) {
+  .product-promo-card {
+    align-items: stretch;
+    flex-direction: column;
+
+    .q-btn {
+      width: 100%;
+    }
+  }
+
+  .product-promo-actions {
+    flex-direction: column;
+    width: 100%;
   }
 }
 </style>
