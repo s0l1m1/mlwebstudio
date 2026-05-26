@@ -120,7 +120,7 @@
 
               <div class="example-content">
                 <div class="example-kicker">
-                  <span>{{ getKicker(index) }}</span>
+                  <span>{{ getKicker(example, index) }}</span>
                   <i>{{ String(index + 1).padStart(2, '0') }}</i>
                 </div>
 
@@ -143,6 +143,19 @@
 
                 <div class="example-actions">
                   <q-btn
+                    v-if="example.liveUrl"
+                    unelevated
+                    rounded
+                    no-caps
+                    class="example-btn"
+                    :label="uiLabels.viewProject"
+                    :href="example.liveUrl"
+                    target="_blank"
+                    rel="noopener"
+                  />
+
+                  <q-btn
+                    v-else
                     unelevated
                     rounded
                     no-caps
@@ -152,7 +165,11 @@
                   />
 
                   <router-link class="example-link" to="/kontakt">
-                    {{ t('examples.quickAsk') || t('nav.sendInquiry') }}
+                    {{
+                      example.liveUrl
+                        ? uiLabels.wantSimilar
+                        : t('examples.quickAsk') || t('nav.sendInquiry')
+                    }}
                     <q-icon name="arrow_forward" />
                   </router-link>
                 </div>
@@ -194,28 +211,105 @@ import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import RevealSection from 'src/components/site/RevealSection.vue'
 
-const { t, tm } = useI18n()
+const { t, tm, locale } = useI18n()
 
-const examples = computed(() => tm('examples.items'))
-const tones = ['blue', 'pink', 'cyan', 'neutral']
+const isEnglish = computed(() => String(locale.value || '').startsWith('en'))
+
+const uiLabels = computed(() => {
+  if (isEnglish.value) {
+    return {
+      viewProject: 'View live site',
+      wantSimilar: 'I want a similar website',
+    }
+  }
+
+  return {
+    viewProject: 'Pogledaj sajt',
+    wantSimilar: 'Želim sličan sajt',
+  }
+})
+
+const realProject = computed(() => {
+  if (isEnglish.value) {
+    return {
+      code: 'auto_centar_salinic',
+      liveUrl: 'https://www.acsalinic.com/',
+      previewUrl: 'www.acsalinic.com',
+      kicker: 'Live client project',
+      title: 'Auto Centar Šalinić',
+      subtitle:
+        'Presentation website for an auto service and wheel alignment business in Kraljevo.',
+      description:
+        'A complete local business website built for Auto Centar Šalinić, with a custom domain, responsive layout, clear call-to-action buttons, basic SEO setup, sitemap, robots.txt and Google Search Console indexing preparation.',
+      bullets: [
+        'Custom domain and live production deployment',
+        'Clear mobile-first calls for phone inquiries',
+        'Local SEO setup for Kraljevo searches',
+        'robots.txt, sitemap.xml and canonical URL',
+        'Google-ready structure for indexing',
+      ],
+      preview: {
+        nav: ['Services', 'Location', 'Reviews', 'Contact'],
+        heroTitle: 'Wheel alignment and auto service in Kraljevo',
+        cta: 'Call the service',
+        cards: ['Wheel alignment', 'Suspension repair', 'Minor service'],
+      },
+    }
+  }
+
+  return {
+    code: 'auto_centar_salinic',
+    liveUrl: 'https://www.acsalinic.com/',
+    previewUrl: 'www.acsalinic.com',
+    kicker: 'Realizovan projekat',
+    title: 'Auto Centar Šalinić',
+    subtitle: 'Prezentacioni sajt za auto servis i reglažu trapa u Kraljevu.',
+    description:
+      'Kompletan lokalni poslovni sajt urađen za Auto Centar Šalinić: domen, responsive dizajn, jasni pozivi za kontakt, osnovni SEO, sitemap, robots.txt i priprema za indeksiranje kroz Google Search Console.',
+    bullets: [
+      'Domen i produkciona objava sajta',
+      'Jasni CTA dugmići za pozive sa telefona',
+      'Lokalni SEO za pretrage u Kraljevu',
+      'robots.txt, sitemap.xml i canonical URL',
+      'Struktura spremna za Google indeksiranje',
+    ],
+    preview: {
+      nav: ['Usluge', 'Lokacija', 'Recenzije', 'Kontakt'],
+      heroTitle: 'Reglaža trapa i auto servis u Kraljevu',
+      cta: 'Pozovite servis',
+      cards: ['Reglaža trapa', 'Popravka trapa', 'Mali servis'],
+    },
+  }
+})
+
+const translatedExamples = computed(() => {
+  const items = tm('examples.items')
+  return Array.isArray(items) ? items : []
+})
+
+const examples = computed(() => [realProject.value, ...translatedExamples.value])
+
+const tones = ['cyan', 'blue', 'pink', 'cyan', 'neutral']
 
 const previewUrls = [
+  'www.acsalinic.com',
   'klima-servis-demo.rs',
   'landing-kampanja.rs',
   'firma-modern.rs',
   'redizajn-sajta.rs',
 ]
 
-const kickersSr = ['Lokalni biznis', 'Kampanja', 'Firma', 'Redizajn']
-const kickersEn = ['Local business', 'Campaign', 'Company', 'Redesign']
+const kickersSr = ['Realizovan projekat', 'Lokalni biznis', 'Kampanja', 'Firma', 'Redizajn']
+const kickersEn = ['Live project', 'Local business', 'Campaign', 'Company', 'Redesign']
 
 function getPreviewUrl(example, index) {
-  return previewUrls[index] || `${example.code || 'demo'}.rs`
+  return example.previewUrl || previewUrls[index] || `${example.code || 'demo'}.rs`
 }
 
-function getKicker(index) {
-  const currentLocale = document.documentElement.lang || 'sr'
-  return currentLocale === 'en' ? kickersEn[index] || 'Demo' : kickersSr[index] || 'Demo'
+function getKicker(example, index) {
+  if (example.kicker) return example.kicker
+
+  return isEnglish.value ? kickersEn[index] || 'Demo' : kickersSr[index] || 'Demo'
 }
 
 onMounted(() => {
